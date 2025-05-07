@@ -191,3 +191,20 @@ If you find our work useful or inspiring, please kindly cite:
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 ```
+
+```
+@inproceedings{alpha-sql,
+  author       = {Boyan Li and
+                  Jiayi Zhang and
+                  Ju Fan and
+                  Yanwei Xu and
+                  Chong Chen and
+                  Nan Tang and
+                  Yuyu Luo},
+  title        = {Alpha-SQL: Zero-Shot Text-to-SQL using Monte Carlo Tree Search},
+  booktitle    = {Forty-Second International Conference on Machine Learning, {ICML} 2025,
+                  Vancouver, Canada, July 13-19, 2025},
+  publisher    = {OpenReview.net},
+  year         = {2025}
+}
+```
