@@ -1,4 +1,4 @@
-# 🚀 Alpha-SQL: Zero-Shot Text-to-SQL using Monte Carlo Tree Search
+<h1 align="center">🚀 Alpha-SQL: Zero-Shot Text-to-SQL using Monte Carlo Tree Search</h1>
 
 <div align="center">
 
