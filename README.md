@@ -170,29 +170,6 @@ conda activate alphasql
 ## 📝 Citation
 If you find our work useful or inspiring, please kindly cite:
 ```bibtex
-@article{DBLP:journals/corr/abs-2502-17248,
-  author       = {Boyan Li and
-                  Jiayi Zhang and
-                  Ju Fan and
-                  Yanwei Xu and
-                  Chong Chen and
-                  Nan Tang and
-                  Yuyu Luo},
-  title        = {Alpha-SQL: Zero-Shot Text-to-SQL using Monte Carlo Tree Search},
-  journal      = {CoRR},
-  volume       = {abs/2502.17248},
-  year         = {2025},
-  url          = {https://doi.org/10.48550/arXiv.2502.17248},
-  doi          = {10.48550/ARXIV.2502.17248},
-  eprinttype    = {arXiv},
-  eprint       = {2502.17248},
-  timestamp    = {Fri, 21 Mar 2025 12:54:48 +0100},
-  biburl       = {https://dblp.org/rec/journals/corr/abs-2502-17248.bib},
-  bibsource    = {dblp computer science bibliography, https://dblp.org}
-}
-```
-
-```
 @inproceedings{alpha-sql,
   author       = {Boyan Li and
                   Jiayi Zhang and
