@@ -1,8 +1,9 @@
-<h1 align="center">🚀Alpha-SQL: Zero-Shot Text-to-SQL using Monte Carlo Tree Search</h1>
+# 🚀 Alpha-SQL: Zero-Shot Text-to-SQL using Monte Carlo Tree Search
 
 <div align="center">
 
 [![Homepage](https://img.shields.io/badge/🏠-Homepage-blue)](https://alpha-sql-hkust.github.io/)
+[![ICML 2025](https://img.shields.io/badge/ICML-2025-FF6B6B.svg)](https://icml.cc/Conferences/2025)
 [![arXiv](https://img.shields.io/badge/arXiv-2502.17248-b31b1b.svg)](https://arxiv.org/abs/2502.17248)
 [![Python](https://img.shields.io/badge/Python-3.11.11-3776AB.svg?style=flat)](https://www.python.org/downloads/release/python-31111/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -20,7 +21,7 @@
 Text-to-SQL, which enables natural language interaction with databases, serves as a pivotal method across diverse industries.
 With new, more powerful large language models (LLMs) emerging every few months, fine-tuning has become incredibly costly, labor-intensive, and error-prone. As an alternative, *zero-shot* Text-to-SQL, which leverages the growing knowledge and reasoning capabilities encoded in LLMs without task-specific fine-tuning, presents a promising and more challenging direction.
 
-To address this challenge, we propose **Alpha-SQL**, a novel approach that leverages a Monte Carlo Tree Search (MCTS) framework to iteratively infer SQL construction actions based on partial SQL query states. To enhance the framework’s reasoning capabilities, we introduce *LLM-as-Action-Model* to dynamically generate SQL construction *actions* during the MCTS process, steering the search toward more promising SQL queries. Moreover, Alpha-SQL employs a self-supervised reward function to evaluate the quality of candidate SQL queries, ensuring more accurate and efficient query generation.
+To address this challenge, we propose **Alpha-SQL**, a novel approach that leverages a Monte Carlo Tree Search (MCTS) framework to iteratively infer SQL construction actions based on partial SQL query states. To enhance the framework's reasoning capabilities, we introduce *LLM-as-Action-Model* to dynamically generate SQL construction *actions* during the MCTS process, steering the search toward more promising SQL queries. Moreover, Alpha-SQL employs a self-supervised reward function to evaluate the quality of candidate SQL queries, ensuring more accurate and efficient query generation.
 
 
 <div align="center">
@@ -39,7 +40,7 @@ AlphaSQL/
 │   ├── 📄 qwen7b_sds_exp.yaml
 │   └── 📄 qwen32b_bird_dev.yaml
 ├── 📂 results/
-│   └── �� dev_pred_sqls.json
+│   └── 📄 dev_pred_sqls.json
 ├── 📂 script/
 │   ├── 📄 preprocess.sh
 │   ├── 📄 qwen32b_bird_dev_exp.sh
