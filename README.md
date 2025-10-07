@@ -136,10 +136,25 @@ conda activate alphasql
 
 ### 2. Dataset Preprocessing
 
-1. Modify `OPENAI_API_KEY` and `OPENAI_BASE_URL` in `.env` file (we need to access `text-embedding-3-large` model of OpenAI in preprocessing stage)
+1. Configure your `.env` file based on `env.example`:
     ```bash
-    OPENAI_API_KEY = "your-api-key"
-    OPENAI_BASE_URL = "your-custom-endopoint" # If you use non-OPENAI services
+    # Required: OpenAI API Configuration (for LLM)
+    OPENAI_API_KEY=your-api-key
+    OPENAI_BASE_URL=https://api.openai.com/v1  # Or your custom endpoint
+    
+    # Required: Embedding Model Configuration
+    EMBEDDING_MODEL=text-embedding-3-large  # Or text-embedding-3-small, text-embedding-ada-002
+    
+    # Optional: Separate embedding service (if using different base URL or API key)
+    # EMBEDDING_API_KEY=your-embedding-api-key
+    # EMBEDDING_BASE_URL=https://api.openai.com/v1  # or http://localhost:8080/v1
+    ```
+    
+    **Important Note**: 
+    - If your **embedding model uses a different base URL** than your LLM, configure `EMBEDDING_BASE_URL` and `EMBEDDING_API_KEY` separately
+    - If not set, embedding will automatically use `OPENAI_BASE_URL` and `OPENAI_API_KEY`
+    - Example: LLM uses local VLLM (`http://localhost:9999/v1`), embedding uses OpenAI API (`https://api.openai.com/v1`)
+    - See `EMBEDDING_CONFIG.md` for detailed configuration examples
 
 2. Run the following:
     ```bash

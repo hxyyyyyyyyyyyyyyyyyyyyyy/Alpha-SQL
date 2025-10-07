@@ -6,3 +6,5 @@ results
 temp
 .env*
 rebuttal_exp
+.history
+project_document

@@ -1,29 +1,32 @@
 import json
+import pickle
+import re
+from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor
+from copy import deepcopy
+from difflib import SequenceMatcher
+from pathlib import Path
+from typing import Any, Dict, List, Tuple
+
+import numpy as np
+from dotenv import load_dotenv
 from loguru import logger
-from typing import List, Dict, Tuple, Any
-from alphasql.runner.task import Task
+from tqdm import tqdm
+
 from alphasql.database.database_manager import DatabaseManager
-from alphasql.database.utils import build_table_ddl_statement
 from alphasql.database.lsh_index import LSHIndex
 from alphasql.database.sql_parse import extract_db_values_from_sql
+from alphasql.database.utils import build_table_ddl_statement
+from alphasql.llm_call.cost_recoder import CostRecorder
+from alphasql.llm_call.embedding_utils import get_embedding_model
 from alphasql.llm_call.openai_llm import call_openai
 from alphasql.llm_call.prompt_factory import get_prompt
-from alphasql.llm_call.cost_recoder import CostRecorder
-from difflib import SequenceMatcher
-from concurrent.futures import ThreadPoolExecutor
-from langchain_openai import OpenAIEmbeddings
-from dotenv import load_dotenv
-import numpy as np
-from tqdm import tqdm
-from pathlib import Path
-import pickle
-from collections import defaultdict
-from copy import deepcopy
-import re
+from alphasql.runner.task import Task
 
 load_dotenv(override=True)
 
-EMBEDDING_MODEL_CALLABLE = OpenAIEmbeddings(model="text-embedding-3-large")
+# Initialize embedding model from environment configuration
+EMBEDDING_MODEL_CALLABLE = get_embedding_model()
 
 COST_RECORDER = CostRecorder(model="gpt-3.5-turbo")
 MODEL_NAME = "gpt-4o-mini"
