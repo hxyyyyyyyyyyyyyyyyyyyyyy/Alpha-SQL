@@ -57,7 +57,7 @@ class LLMGuidedSolver:
         
         step = 0
         while not current.is_terminal() and step < self.max_steps and current.depth < self.max_depth:
-            print(f"  Step {step + 1}, Current node type: {current.node_type}")
+            #print(f"  Step {step + 1}, Current node type: {current.node_type}")
             
             # 获取当前节点的有效action空间
             valid_action_space = get_valid_action_space_for_node(current)
@@ -126,9 +126,9 @@ class LLMGuidedSolver:
         
         # 生成多条推理路径
         for path_idx in range(self.num_paths):
-            print(f"\n{'='*80}")
-            print(f"Question ID: {self.task.question_id}, Generating path {path_idx + 1} / {self.num_paths}")
-            print(f"{'='*80}")
+            #print(f"\n{'='*80}")
+            #print(f"Question ID: {self.task.question_id}, Generating path {path_idx + 1} / {self.num_paths}")
+            #print(f"{'='*80}")
             
             try:
                 path = self.generate_one_path(root_node)

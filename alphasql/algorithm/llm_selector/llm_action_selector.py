@@ -46,35 +46,27 @@ class LLMActionSelector:
         
         action_options_str = "\n".join(action_options)
         
-        # 获取schema信息 - 若已进行SchemaSelection则使用selected_schema，否则使用完整schema
-        schema_context = node.selected_schema_context if node.selected_schema_context else node.schema_context
+        # 获取schema信息 - 只保留表名称和数量，不使用完整schema
+        schema_len = node.schema_context.count("CREATE TABLE")
+        if node.selected_schema_context:
+            # 如果已经做过schema selection，提取表名
+            schema_summary = self._extract_table_names(node.selected_schema_context)
+        elif schema_len <= 30:
+            schema_summary = self._extract_table_names(node.schema_context)
+        else:
+            # 否则只显示表数量
+            schema_summary = self._get_schema_summary(node.schema_context)
         
         # 构建提示词
-        prompt = f"""You are an expert SQL query generator. Given the current state of SQL query generation process, select the most appropriate next action.
-
-Database Schema:
-{schema_context}
-
-Current State:
-{context}
-
-Available Actions:
-{action_options_str}
-
-Please analyze the current state and choose the best next action. Consider:
-1. Have we done enough preparation to generate SQL? If done, feel free to generate SQL directly, If not, choose actions that help gather more information.
-2. What information is still missing?
-3. What is the logical next step in the SQL generation process?
-4. If SQL has been generated, check its compilation status to decide next steps.
-
-Respond in the following JSON format:
-```json
-{{
-    "reasoning": "Your reasoning for choosing this action",
-    "selected_action_number": <number between 1 and {len(valid_actions)}>
-}}
-```
-"""
+        prompt = get_prompt(
+            template_name="action_select",
+            template_args={
+                "context": context,
+                "schema_summary": schema_summary,
+                "action_options_str": action_options_str,
+                "len_valid_actions": str(len(valid_actions))
+            }
+        )
         
         # 调用大模型
         try:
@@ -92,7 +84,7 @@ Respond in the following JSON format:
             )[0]
             
             # 解析响应
-            print(f"\n[LLM Action Selection] Prompt: {prompt}")
+            # print(f"\n[LLM Action Selection] Prompt: {prompt}")
             json_match = re.search(r"```json\n(.*?)```", response, flags=re.DOTALL)
             if json_match:
                 result = json.loads(json_match.group(1))
@@ -101,8 +93,8 @@ Respond in the following JSON format:
                 
                 # 验证选择的索引
                 if 0 <= selected_idx < len(valid_actions):
-                    print(f"\n[LLM Action Selection] Reasoning: {reasoning}")
-                    print(f"[LLM Action Selection] Selected: {self.get_action_description(valid_actions[selected_idx].__class__)}")
+                    # print(f"\n[LLM Action Selection] Reasoning: {reasoning}")
+                    # print(f"[LLM Action Selection] Selected: {self.get_action_description(valid_actions[selected_idx].__class__)}")
                     return valid_actions[selected_idx]
             
             # 如果解析失败，返回默认策略
@@ -198,3 +190,13 @@ Respond in the following JSON format:
             return next(a for a in valid_actions if isinstance(a, SchemaSelectionAction))
         
         return valid_actions[0]
+    
+    def _extract_table_names(self, schema_context: str) -> str:
+        """提取schema中的表名"""
+        table_names = re.findall(r"CREATE TABLE `(\w+)`", schema_context)
+        return f"Tables: {', '.join(table_names)}" if table_names else "No tables found"
+    
+    def _get_schema_summary(self, schema_context: str) -> str:
+        """获取schema的摘要信息"""
+        table_count = schema_context.count("CREATE TABLE")
+        return f"Total Tables: {table_count}"

@@ -1,0 +1,24 @@
+You are an expert SQL query generator. Given the current state of SQL query generation process, select the most appropriate next action.
+
+Database Tables:
+{schema_summary}
+
+Current State:
+{context}
+
+Available Actions:
+{action_options_str}
+
+Please analyze the current state and choose the best next action. Consider:
+1. Have we done enough preparation to generate SQL? If done, feel free to generate SQL directly, If not, choose actions that help gather more information.
+2. What information is still missing?
+3. What is the logical next step in the SQL generation process?
+4. If SQL has been generated, check its compilation status to decide next steps.
+
+Respond in the following JSON format:
+```json
+{{
+    "reasoning": "Your reasoning for choosing this action",
+    "selected_action_number": <number between 1 and {len_valid_actions}>
+}}
+```
