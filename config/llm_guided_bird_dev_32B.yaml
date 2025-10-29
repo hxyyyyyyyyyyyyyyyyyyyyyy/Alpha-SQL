@@ -1,0 +1,19 @@
+tasks_file_path: "data/preprocessed/bird/dev/tasks.pkl"
+subset_file_path: null
+db_root_dir: "data/bird/dev/dev_databases"
+n_processes: 8
+max_rollout_steps: 10
+max_depth: 8
+exploration_constant: 1.414
+random_seed: 42
+save_root_dir: "results/llm_guided/Qwen2.5-Coder-32B-Instruct/bird/dev"
+mcts_model_kwargs:
+    model: "Qwen/Qwen2.5-Coder-32B-Instruct"
+    temperature: 0.3
+    max_tokens: 2048
+    n: 5
+reward_model_kwargs:
+    model: "Qwen/Qwen2.5-Coder-32B-Instruct"
+    temperature: 0.0
+    max_tokens: 512
+    n: 5
