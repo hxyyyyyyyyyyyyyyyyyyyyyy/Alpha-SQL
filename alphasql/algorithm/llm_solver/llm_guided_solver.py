@@ -154,5 +154,6 @@ class LLMGuidedSolver:
         print(f"Saving to {save_path}")
         print(f"{'='*80}\n")
         
-        with open(save_path, "wb") as f:
-            pickle.dump(all_reasoning_paths, f)
+        if all_reasoning_paths != []:
+            with open(save_path, "wb") as f:
+                pickle.dump(all_reasoning_paths, f)

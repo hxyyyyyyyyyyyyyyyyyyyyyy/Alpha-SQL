@@ -71,6 +71,7 @@ def call_openai(prompt: str,
         except Exception as e:
             print("-" * 100)
             print(f"Error calling OpenAI: {e}")
+            print(prompt, flush=True)
             print(f"Start retrying {retrying + 1} times")
             print("-" * 100)
             retrying += 1
