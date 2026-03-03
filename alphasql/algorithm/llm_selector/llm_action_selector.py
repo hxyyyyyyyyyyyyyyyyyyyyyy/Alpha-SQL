@@ -68,42 +68,81 @@ class LLMActionSelector:
             }
         )
         
-        # 调用大模型
-        try:
-            # 使用配置文件中的模型，如果没有指定则抛出异常
-            model = self.llm_kwargs.get("model")
-            if not model:
-                raise ValueError("Model not specified in llm_kwargs")
-            
-            response = call_openai(
-                prompt=prompt,
-                model=model,
-                temperature=self.llm_kwargs.get("temperature", 0.3),
-                max_tokens=self.llm_kwargs.get("max_tokens", 512),
-                n=1
-            )[0]
-            
-            # 解析响应
-            # print(f"\n[LLM Action Selection] Prompt: {prompt}")
-            json_match = re.search(r"```json\n(.*?)```", response, flags=re.DOTALL)
-            if json_match:
-                result = json.loads(json_match.group(1))
-                selected_idx = result.get("selected_action_number", 1) - 1
-                reasoning = result.get("reasoning", "")
-                
+        # 调用大模型（按mcts_model_kwargs中的n重试）
+        # mcts中n表示每次扩展/采样数量，这里对齐为action选择重试次数
+        retry_times = max(int(self.llm_kwargs.get("n", 1)), 1)
+
+        # 使用配置文件中的模型，如果没有指定则抛出异常
+        model = self.llm_kwargs.get("model")
+        if not model:
+            raise ValueError("Model not specified in llm_kwargs")
+
+        for retry_idx in range(retry_times):
+            try:
+                response = call_openai(
+                    prompt=prompt,
+                    model=model,
+                    temperature=self.llm_kwargs.get("temperature", 0.3),
+                    max_tokens=self.llm_kwargs.get("max_tokens", 512),
+                    n=1
+                )[0]
+
+                # 解析响应
+                # print(f"\n[LLM Action Selection] Prompt: {prompt}")
+                selected_idx = self._parse_selected_action_idx(response)
+
                 # 验证选择的索引
                 if 0 <= selected_idx < len(valid_actions):
-                    # print(f"\n[LLM Action Selection] Reasoning: {reasoning}")
-                    # print(f"[LLM Action Selection] Selected: {self.get_action_description(valid_actions[selected_idx].__class__)}")
+                    # print(f"\n[LLM Action Selection] Selected: {self.get_action_description(valid_actions[selected_idx].__class__)}")
                     return valid_actions[selected_idx]
-            
-            # 如果解析失败，返回默认策略
-            print("[LLM Action Selection] Failed to parse response, using default strategy")
-            return self._default_action_selection(node, valid_actions)
-            
-        except Exception as e:
-            print(f"[LLM Action Selection] Error: {e}, using default strategy")
-            return self._default_action_selection(node, valid_actions)
+                else:
+                    print(f"[LLM Action Selection] Error Response: {response}")
+
+                if retry_idx < retry_times - 1:
+                    continue
+
+            except Exception as e:
+                print(f"[LLM Action Selection] Error: {e}")
+                if retry_idx < retry_times - 1:
+                    continue
+
+        # 重试耗尽后，返回默认策略
+        print("[LLM Action Selection] Failed to parse response after retries, using default strategy")
+        return self._default_action_selection(node, valid_actions)
+
+    def _safe_int(self, value: Any, default: int = 0) -> int:
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            normalized_value = re.sub(r"\s+", "", str(value))
+            normalized_match = re.search(r"[-+]?\d+", normalized_value)
+            if normalized_match:
+                try:
+                    return int(normalized_match.group(0))
+                except (TypeError, ValueError):
+                    pass
+            return default
+
+    def _parse_selected_action_idx(self, response: str) -> int:
+        # 1) 优先解析 ```json ... ``` 代码块
+        json_match = re.search(r"```json\n(.*?)```(.*?)", response, flags=re.DOTALL)
+        if json_match:
+            try:
+                result = json.loads(json_match.group(1))
+                return self._safe_int(result.get("selected_action_number", 0), 0) - 1
+            except Exception:
+                pass
+
+        # 2) 再尝试从整段文本中直接匹配字段（兼容字符串/数字）
+        selected_action_match = re.search(
+            r'"selected_action_number"\s*:\s*"?(\d+)"?',
+            response,
+            flags=re.DOTALL,
+        )
+        if selected_action_match:
+            return self._safe_int(selected_action_match.group(1), 0) - 1
+
+        return -1
     
     def _build_context(self, node: MCTSNode) -> str:
         """构建当前节点的上下文信息"""

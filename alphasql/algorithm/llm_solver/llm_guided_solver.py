@@ -136,8 +136,8 @@ class LLMGuidedSolver:
                 # 检查路径是否有效（是否到达了终止节点）
                 if path[-1].is_terminal():
                     all_reasoning_paths.append(path)
-                    print(f"✓ Path {path_idx + 1} completed successfully")
-                    print(f"  Final SQL: {path[-1].final_sql_query}")
+                    # print(f"✓ Path {path_idx + 1} completed successfully")
+                    # print(f"  Final SQL: {path[-1].final_sql_query}")
                 else:
                     print(f"✗ Path {path_idx + 1} did not reach terminal node")
                     
@@ -148,11 +148,7 @@ class LLMGuidedSolver:
         
         # 保存结果
         save_path = Path(self.save_root_dir) / f"{self.task.question_id}.pkl"
-        print(f"\n{'='*80}")
-        print(f"Question ID: {self.task.question_id} completed")
-        print(f"Successfully generated {len(all_reasoning_paths)} reasoning paths")
-        print(f"Saving to {save_path}")
-        print(f"{'='*80}\n")
+        print(f"Question ID: {self.task.question_id} done, valid reasoning paths: {len(all_reasoning_paths)}")
         
         if all_reasoning_paths != []:
             with open(save_path, "wb") as f:

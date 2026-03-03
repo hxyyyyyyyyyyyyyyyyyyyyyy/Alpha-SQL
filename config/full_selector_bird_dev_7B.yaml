@@ -1,0 +1,14 @@
+tasks_file_path: "data/preprocessed/bird/dev/tasks.pkl"
+subset_file_path: "data/bird/dev/chess.json"
+db_root_dir: "data/bird/dev/dev_databases"
+n_processes: 8
+max_depth: 8
+save_root_dir: "results/full_selector/Qwen2.5-Coder-7B-Instruct/bird/dev"
+random_seed: 42
+max_expansion_nodes: null
+
+mcts_model_kwargs:
+    model: "Qwen/Qwen2.5-Coder-7B-Instruct"
+    temperature: 0.3
+    max_tokens: 2048
+    n: 1

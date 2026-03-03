@@ -10,6 +10,17 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 EXECUTION_TIME_REPEAT = 20
 
+
+def str2bool(value):
+    if isinstance(value, bool):
+        return value
+    value = value.lower()
+    if value in {"true", "1", "yes", "y", "on"}:
+        return True
+    if value in {"false", "0", "no", "n", "off"}:
+        return False
+    raise argparse.ArgumentTypeError("Boolean value expected. Use true/false.")
+
 def select_final_sql_query(results_file_path: str, db_root_dir: str):
     question_id = int(results_file_path.split("/")[-1].split(".")[0])
     with open(results_file_path, "rb") as f:
@@ -104,7 +115,7 @@ def main(args):
             final_pred_sqls[str(selected_item["question_id"])] = selected_item["sql"] + '\t----- bird -----\t' + selected_item["db_id"]
 
     # Fill missing IDs with default value
-    if final_pred_sqls:
+    if args.fill_missing_error and final_pred_sqls:
         question_ids = [int(qid) for qid in final_pred_sqls.keys()]
         min_id = min(question_ids)
         max_id = max(question_ids)
@@ -125,5 +136,13 @@ if __name__ == "__main__":
     parser.add_argument("--db_root_dir", type=str, required=True)
     parser.add_argument("--process_num", type=int, default=32)
     parser.add_argument("--output_path", type=str, required=True)
+    parser.add_argument(
+        "--fill_missing_error",
+        type=str2bool,
+        nargs="?",
+        const=True,
+        default=True,
+        help="Whether to fill missing question IDs with default ERROR entries (default: true)."
+    )
     args = parser.parse_args()
     main(args)

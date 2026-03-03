@@ -77,6 +77,39 @@ def package_sqls(sql_path, db_root_path, mode='gpt', data_mode='dev'):
 
     return clean_sqls, db_path_list
 
+
+def package_sqls_aligned(predicted_sql_path, ground_truth_path, db_root_path):
+    pred_queries = []
+    db_paths = []
+    gt_queries = []
+    question_ids = []
+
+    sql_data = json.load(open(predicted_sql_path, 'r'))
+    sorted_items = sorted(sql_data.items(), key=lambda x: int(x[0]))
+
+    sqls = open(ground_truth_path)
+    sql_txt = sqls.readlines()
+
+    for qid_str, sql_str in sorted_items:
+        qid = int(qid_str)
+
+        if type(sql_str) == str and '\t----- bird -----\t' in sql_str:
+            pred_sql, db_name = sql_str.split('\t----- bird -----\t')
+        else:
+            pred_sql, db_name = ' ', 'financial'
+
+        if qid < 0 or qid >= len(sql_txt):
+            continue
+
+        gt_sql, _ = sql_txt[qid].strip().split('\t')
+
+        pred_queries.append(pred_sql)
+        gt_queries.append(gt_sql)
+        db_paths.append(db_root_path + db_name + '/' + db_name + '.sqlite')
+        question_ids.append(qid)
+
+    return pred_queries, gt_queries, db_paths, question_ids
+
 def run_sqls_parallel(sqls, db_places, num_cpus=1, meta_time_out=30.0):
     pool = mp.Pool(processes=num_cpus)
     for i,sql_pair in enumerate(sqls):
@@ -113,6 +146,34 @@ def compute_acc_by_diff(exec_results,diff_json_path):
     return simple_acc * 100, moderate_acc * 100, challenging_acc * 100, all_acc * 100, count_lists
 
 
+def compute_acc_by_diff_aligned(exec_results, diff_json_path, question_ids):
+    num_queries = len(exec_results)
+    results = [res['res'] for res in exec_results]
+    contents = load_json(diff_json_path)
+    simple_results, moderate_results, challenging_results = [], [], []
+
+    for result_idx, qid in enumerate(question_ids):
+        if qid < 0 or qid >= len(contents) or result_idx >= len(exec_results):
+            continue
+
+        content = contents[qid]
+        if content['difficulty'] == 'simple':
+            simple_results.append(exec_results[result_idx])
+
+        if content['difficulty'] == 'moderate':
+            moderate_results.append(exec_results[result_idx])
+
+        if content['difficulty'] == 'challenging':
+            challenging_results.append(exec_results[result_idx])
+
+    simple_acc = (sum([res['res'] for res in simple_results])/len(simple_results)) if simple_results else 0
+    moderate_acc = (sum([res['res'] for res in moderate_results])/len(moderate_results)) if moderate_results else 0
+    challenging_acc = (sum([res['res'] for res in challenging_results])/len(challenging_results)) if challenging_results else 0
+    all_acc = (sum(results)/num_queries) if num_queries else 0
+    count_lists = [len(simple_results), len(moderate_results), len(challenging_results), num_queries]
+    return simple_acc * 100, moderate_acc * 100, challenging_acc * 100, all_acc * 100, count_lists
+
+
 
 def print_data(score_lists,count_lists):
     levels = ['simple', 'moderate', 'challenging', 'total']
@@ -138,11 +199,11 @@ if __name__ == '__main__':
     args = args_parser.parse_args()
     exec_result = []
 
-    pred_queries, db_paths = package_sqls(args.predicted_sql_path, args.db_root_path, mode='gpt',
-                                          data_mode=args.data_mode)
-    # generate gt sqls:
-    gt_queries, db_paths_gt = package_sqls(args.ground_truth_path, args.db_root_path, mode='gt',
-                                           data_mode=args.data_mode)
+    pred_queries, gt_queries, db_paths, question_ids = package_sqls_aligned(
+        args.predicted_sql_path,
+        args.ground_truth_path,
+        args.db_root_path
+    )
 
     query_pairs = list(zip(pred_queries,gt_queries))
     run_sqls_parallel(query_pairs, db_places=db_paths, num_cpus=args.num_cpus, meta_time_out=args.meta_time_out)
@@ -150,7 +211,7 @@ if __name__ == '__main__':
     
     print('start calculate')
     simple_acc, moderate_acc, challenging_acc, acc, count_lists = \
-        compute_acc_by_diff(exec_result,args.diff_json_path)
+        compute_acc_by_diff_aligned(exec_result, args.diff_json_path, question_ids=question_ids)
     score_lists = [simple_acc, moderate_acc, challenging_acc, acc]
     print_data(score_lists,count_lists)
     print('===========================================================================================')
