@@ -1,0 +1,26 @@
+tasks_file_path: "data/preprocessed/bird/dev/tasks.pkl"
+subset_file_path: "data/bird/dev/chess.json"
+db_root_dir: "data/bird/dev/dev_databases"
+n_processes: 8
+max_depth: 8
+max_path_steps: 8
+random_seed: 42
+save_root_dir: "results/llm_genetic_fix/Qwen2.5-Coder-7B-Instruct/bird/dev"
+
+mcts_model_kwargs:
+    model: "Qwen/Qwen2.5-Coder-7B-Instruct"
+    n: 3
+    top_p: 0.8
+    max_tokens: 4096
+    temperature: 0.3
+    n_strategy: "single"
+
+llm_seed_num_paths: 6
+llm_seed_num_retry: 12
+target_num_paths: 16
+
+ga_population_size: 8
+ga_max_generations: 20
+ga_crossover_rate: 0.7
+ga_mutation_rate: 0.3
+ga_tournament_size: 3

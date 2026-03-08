@@ -35,6 +35,9 @@ class LLMActionSelector:
         """
         使用大模型选择最优的下一步action
         """
+        if len(valid_actions) == 1:
+            return valid_actions[0]
+
         # 构建当前状态的上下文
         context = self._build_context(node)
         
@@ -96,13 +99,19 @@ class LLMActionSelector:
                     # print(f"\n[LLM Action Selection] Selected: {self.get_action_description(valid_actions[selected_idx].__class__)}")
                     return valid_actions[selected_idx]
                 else:
-                    print(f"[LLM Action Selection] Error Response: {response}")
+                    print("[LLM Action Selection] Error Response")
+                    print(f"  response: {response}")
+                    print(f"  valid_actions: {self._format_valid_actions(valid_actions)}")
+                    print(f"  path_info: {self._format_path_info(node)}")
 
                 if retry_idx < retry_times - 1:
                     continue
 
             except Exception as e:
-                print(f"[LLM Action Selection] Error: {e}")
+                print("[LLM Action Selection] Error")
+                print(f"  error: {e}")
+                print(f"  valid_actions: {self._format_valid_actions(valid_actions)}")
+                print(f"  path_info: {self._format_path_info(node)}")
                 if retry_idx < retry_times - 1:
                     continue
 
@@ -110,39 +119,32 @@ class LLMActionSelector:
         print("[LLM Action Selection] Failed to parse response after retries, using default strategy")
         return self._default_action_selection(node, valid_actions)
 
-    def _safe_int(self, value: Any, default: int = 0) -> int:
-        try:
-            return int(value)
-        except (TypeError, ValueError):
-            normalized_value = re.sub(r"\s+", "", str(value))
-            normalized_match = re.search(r"[-+]?\d+", normalized_value)
-            if normalized_match:
-                try:
-                    return int(normalized_match.group(0))
-                except (TypeError, ValueError):
-                    pass
-            return default
-
     def _parse_selected_action_idx(self, response: str) -> int:
         # 1) 优先解析 ```json ... ``` 代码块
         json_match = re.search(r"```json\n(.*?)```(.*?)", response, flags=re.DOTALL)
         if json_match:
             try:
                 result = json.loads(json_match.group(1))
-                return self._safe_int(result.get("selected_action_number", 0), 0) - 1
+                selected_action_number = int(result["selected_action_number"])
+                return selected_action_number - 1
             except Exception:
                 pass
 
-        # 2) 再尝试从整段文本中直接匹配字段（兼容字符串/数字）
-        selected_action_match = re.search(
-            r'"selected_action_number"\s*:\s*"?(\d+)"?',
-            response,
-            flags=re.DOTALL,
-        )
-        if selected_action_match:
-            return self._safe_int(selected_action_match.group(1), 0) - 1
-
         return -1
+
+    def _format_valid_actions(self, valid_actions: List[MCTSAction]) -> List[str]:
+        return [self.get_action_description(action.__class__) for action in valid_actions]
+
+    def _format_path_info(self, node: MCTSNode) -> Dict[str, Any]:
+        executed_actions = [
+            path_node.parent_action.__class__.__name__
+            for path_node in node.path_nodes[1:]
+            if path_node.parent_action
+        ]
+        return {
+            "depth": node.depth,
+            "executed_actions": executed_actions,
+        }
     
     def _build_context(self, node: MCTSNode) -> str:
         """构建当前节点的上下文信息"""
