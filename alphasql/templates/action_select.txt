@@ -16,10 +16,10 @@ Please analyze the current state and choose the best next action. Consider:
 4. If SQL has been generated, check its compilation status to decide next steps.
 
 Rules:
-1. You must select only from the numbered actions listed in Available Actions.
+1. You must select only from the actions listed in Available Actions.
 2. Do not select any action that has already been executed in the current path/state.
-3. Return exactly one valid action number.
-4. If some actions look similar, still choose only one number from the list.
+3. Return exactly one valid action.
+4. If some actions look similar, still choose only one action from the list.
 
 Respond in the following JSON format:
 ```json

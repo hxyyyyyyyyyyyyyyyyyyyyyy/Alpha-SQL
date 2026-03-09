@@ -8,6 +8,8 @@ from pathlib import Path
 import json
 import re
 
+ACTION_SELECTION_TEMPERATURE = 0.3
+ACTION_SELECTION_LLM_KWARGS_N = 3
 
 class LLMActionSelector:
     """
@@ -57,8 +59,8 @@ class LLMActionSelector:
         elif schema_len <= 30:
             schema_summary = self._extract_table_names(node.schema_context)
         else:
-            # 否则只显示表数量
-            schema_summary = self._get_schema_summary(node.schema_context)
+            # 表太多时，保留长度最短的30个表信息
+            schema_summary = self._extract_shortest_table_infos(node.schema_context, max_tables=30)
         
         # 构建提示词
         prompt = get_prompt(
@@ -71,9 +73,12 @@ class LLMActionSelector:
             }
         )
         
+        new_llm_kwargs = copy.deepcopy(self.llm_kwargs)
+        new_llm_kwargs["temperature"] = ACTION_SELECTION_TEMPERATURE
+        new_llm_kwargs["n"] = ACTION_SELECTION_LLM_KWARGS_N
         # 调用大模型（按mcts_model_kwargs中的n重试）
         # mcts中n表示每次扩展/采样数量，这里对齐为action选择重试次数
-        retry_times = max(int(self.llm_kwargs.get("n", 1)), 1)
+        retry_times = max(int(new_llm_kwargs.get("n", 1)), 1)
 
         # 使用配置文件中的模型，如果没有指定则抛出异常
         model = self.llm_kwargs.get("model")
@@ -82,17 +87,21 @@ class LLMActionSelector:
 
         for retry_idx in range(retry_times):
             try:
+                
                 response = call_openai(
                     prompt=prompt,
                     model=model,
-                    temperature=self.llm_kwargs.get("temperature", 0.3),
-                    max_tokens=self.llm_kwargs.get("max_tokens", 512),
+                    temperature=new_llm_kwargs.get("temperature", 0.3),
+                    max_tokens=new_llm_kwargs.get("max_tokens", 512),
                     n=1
                 )[0]
 
                 # 解析响应
                 # print(f"\n[LLM Action Selection] Prompt: {prompt}")
-                selected_idx = self._parse_selected_action_idx(response)
+                # selected_idx = self._parse_selected_action_idx(response)
+                # 打印响应到/home/lsp/alphasql/Alpha-SQL/results目录下新建一个txt文件，并且追加形式写入，不用根据时间
+                
+                selected_idx = self._parse_selected_action(valid_actions, response)
 
                 # 验证选择的索引
                 if 0 <= selected_idx < len(valid_actions):
@@ -103,6 +112,13 @@ class LLMActionSelector:
                     print(f"  response: {response}")
                     print(f"  valid_actions: {self._format_valid_actions(valid_actions)}")
                     print(f"  path_info: {self._format_path_info(node)}")
+                    # 并且打印到/home/lsp/alphasql/Alpha-SQL/results下面新建一个txt文件里面
+                    with open("/home/lsp/alphasql/Alpha-SQL/results/error_log1.txt", "a") as f:
+                        f.write(f"\n[LLM Action Selection] Prompt:\n{prompt}\n")
+                        f.write(f"[LLM Action Selection] Error Response\n")
+                        f.write(f"  response: {response}\n")
+                        f.write(f"  valid_actions: {self._format_valid_actions(valid_actions)}\n")
+                        f.write(f"  path_info: {self._format_path_info(node)}\n")
 
                 if retry_idx < retry_times - 1:
                     continue
@@ -112,11 +128,23 @@ class LLMActionSelector:
                 print(f"  error: {e}")
                 print(f"  valid_actions: {self._format_valid_actions(valid_actions)}")
                 print(f"  path_info: {self._format_path_info(node)}")
+                # 并且打印到/home/lsp/alphasql/Alpha-SQL/results下面新建一个txt文件里面
+                with open("/home/lsp/alphasql/Alpha-SQL/results/error_log2.txt", "a") as f:
+                    f.write(f"\n[LLM Action Selection] Prompt:\n{prompt}\n")
+                    f.write(f"[LLM Action Selection] Error\n")
+                    f.write(f"  error: {e}\n")
+                    f.write(f"  valid_actions: {self._format_valid_actions(valid_actions)}\n")
+                    f.write(f"  path_info: {self._format_path_info(node)}\n")
                 if retry_idx < retry_times - 1:
                     continue
 
         # 重试耗尽后，返回默认策略
         print("[LLM Action Selection] Failed to parse response after retries, using default strategy")
+        # 写进文件
+        with open("/home/lsp/alphasql/Alpha-SQL/results/error_log2.txt", "a") as f:
+            f.write(f"[LLM Action Selection] Failed to parse response after retries, using default strategy\n")
+            f.write(f"  valid_actions: {self._format_valid_actions(valid_actions)}\n")
+            f.write(f"  path_info: {self._format_path_info(node)}\n")
         return self._default_action_selection(node, valid_actions)
 
     def _parse_selected_action_idx(self, response: str) -> int:
@@ -131,6 +159,67 @@ class LLMActionSelector:
                 pass
 
         return -1
+    
+    def _parse_selected_action(self, valid_actions: List[MCTSAction], response: str) -> int:
+        def normalize_text(text: str) -> str:
+            return re.sub(r"\s+", " ", text.strip()).lower()
+
+        def compact_text(text: str) -> str:
+            return re.sub(r"[^a-z0-9]", "", normalize_text(text))
+
+        def parse_json_payload(raw_response: str) -> Optional[Dict[str, Any]]:
+            json_block_match = re.search(r"```json\s*(\{.*?\})\s*```", raw_response, flags=re.DOTALL)
+            if json_block_match:
+                try:
+                    return json.loads(json_block_match.group(1))
+                except Exception:
+                    pass
+
+            raw_json_match = re.search(r"\{.*\}", raw_response, flags=re.DOTALL)
+            if raw_json_match:
+                try:
+                    return json.loads(raw_json_match.group(0))
+                except Exception:
+                    pass
+
+            return None
+
+        payload = parse_json_payload(response)
+        if not payload:
+            return -1
+
+        selected_action = payload.get("selected_action")
+        if not isinstance(selected_action, str):
+            return -1
+
+        selected_normalized = normalize_text(selected_action)
+        selected_name = normalize_text(selected_action.split(":", 1)[0])
+        selected_compact = compact_text(selected_action)
+        selected_name_compact = compact_text(selected_action.split(":", 1)[0])
+
+        for idx, action in enumerate(valid_actions):
+            action_desc = self.get_action_description(action.__class__)
+            action_desc_normalized = normalize_text(action_desc)
+            action_name_normalized = normalize_text(action_desc.split(":", 1)[0])
+            action_class_normalized = normalize_text(action.__class__.__name__)
+            action_desc_compact = compact_text(action_desc)
+            action_name_compact = compact_text(action_desc.split(":", 1)[0])
+            action_class_compact = compact_text(action.__class__.__name__)
+
+            if selected_normalized in {action_desc_normalized, action_name_normalized, action_class_normalized}:
+                return idx
+
+            if selected_name in {action_desc_normalized, action_name_normalized, action_class_normalized}:
+                return idx
+
+            if selected_compact in {action_desc_compact, action_name_compact, action_class_compact}:
+                return idx
+
+            if selected_name_compact in {action_desc_compact, action_name_compact, action_class_compact}:
+                return idx
+
+        return -1
+        
 
     def _format_valid_actions(self, valid_actions: List[MCTSAction]) -> List[str]:
         return [self.get_action_description(action.__class__) for action in valid_actions]
@@ -236,6 +325,31 @@ class LLMActionSelector:
         """提取schema中的表名"""
         table_names = re.findall(r"CREATE TABLE `(\w+)`", schema_context)
         return f"Tables: {', '.join(table_names)}" if table_names else "No tables found"
+
+    def _extract_shortest_table_infos(self, schema_context: str, max_tables: int = 30) -> str:
+        """提取长度最短的若干个表DDL信息"""
+        table_blocks = re.findall(r"(CREATE TABLE\s+`?\w+`?\s*\(.*?\);)", schema_context, flags=re.DOTALL)
+        if not table_blocks:
+            return self._get_schema_summary(schema_context)
+
+        table_infos = []
+        for block in table_blocks:
+            name_match = re.search(r"CREATE TABLE\s+`?(\w+)`?", block)
+            table_name = name_match.group(1) if name_match else "unknown_table"
+            clean_block = block.strip()
+            table_infos.append((len(clean_block), table_name, clean_block))
+
+        shortest_infos = sorted(table_infos, key=lambda item: item[0])[:max_tables]
+        formatted_blocks = [info[2] for info in shortest_infos]
+
+        # return (
+        #     f"Schema is truncated: only {len(formatted_blocks)} tables are provided out of {len(table_blocks)} total tables. "
+        #     "This is NOT the full schema.\n"
+        #     + "\n\n".join(formatted_blocks)
+        # )
+        
+        return f"Tables: {', '.join(formatted_blocks)}\n" + "...(More tables truncated)\n" if formatted_blocks else "No tables found"
+        
     
     def _get_schema_summary(self, schema_context: str) -> str:
         """获取schema的摘要信息"""
