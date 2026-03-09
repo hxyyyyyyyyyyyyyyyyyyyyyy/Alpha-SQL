@@ -15,10 +15,18 @@ Please analyze the current state and choose the best next action. Consider:
 3. What is the logical next step in the SQL generation process?
 4. If SQL has been generated, check its compilation status to decide next steps.
 
+Rules:
+1. You MUST choose exactly one action from Available Actions.
+2. Copy the action name EXACTLY from Available Actions (case-sensitive, no rewrite).
+3. Do NOT output any action that is not in Available Actions.
+4. Do NOT choose an already executed action.
+5. If SQL compilation FAILED and "SQL Revision" is in Available Actions, choose "SQL Revision".
+6. If SQL compilation PASSED and "End" is in Available Actions, choose "End".
+
 Respond in the following JSON format:
 ```json
 {{
     "reasoning": "Your reasoning for choosing this action",
-    "selected_action_number": <number between 1 and {len_valid_actions}>
+    "selected_action": "exact action name from Available Actions"
 }}
 ```
