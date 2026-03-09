@@ -1,5 +1,6 @@
 #!/bin/bash
 
+start_time=$(date +%s)
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 
 echo "=========================================="
@@ -12,3 +13,6 @@ python -m alphasql.runner.llm_guided_runner config/llm_guided_bird_dev_7B.yaml
 echo "=========================================="
 echo "LLM-Guided Mode Completed!"
 echo "=========================================="
+
+end_time=$(date +%s)
+echo "Time taken: $((end_time - start_time)) seconds"
