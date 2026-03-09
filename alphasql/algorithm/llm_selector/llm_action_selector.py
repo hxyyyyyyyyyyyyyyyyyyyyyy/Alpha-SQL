@@ -145,6 +145,7 @@ class LLMActionSelector:
             f.write(f"[LLM Action Selection] Failed to parse response after retries, using default strategy\n")
             f.write(f"  valid_actions: {self._format_valid_actions(valid_actions)}\n")
             f.write(f"  path_info: {self._format_path_info(node)}\n")
+            f.write(f"  last_prompt: {prompt}\n")
         return self._default_action_selection(node, valid_actions)
 
     def _parse_selected_action_idx(self, response: str) -> int:
