@@ -56,11 +56,8 @@ class LLMActionSelector:
         if node.selected_schema_context:
             # 如果已经做过schema selection，提取表名
             schema_summary = self._extract_table_names(node.selected_schema_context)
-        elif schema_len <= 30:
-            schema_summary = self._extract_table_names(node.schema_context)
         else:
-            # 表太多时，保留长度最短的30个表信息
-            schema_summary = self._extract_shortest_table_infos(node.schema_context, max_tables=30)
+            schema_summary = self._extract_table_names(node.schema_context)
         
         # 构建提示词
         prompt = get_prompt(
@@ -76,8 +73,6 @@ class LLMActionSelector:
         new_llm_kwargs = copy.deepcopy(self.llm_kwargs)
         new_llm_kwargs["temperature"] = ACTION_SELECTION_TEMPERATURE
         new_llm_kwargs["n"] = ACTION_SELECTION_LLM_KWARGS_N
-        # 调用大模型（按mcts_model_kwargs中的n重试）
-        # mcts中n表示每次扩展/采样数量，这里对齐为action选择重试次数
         retry_times = max(int(new_llm_kwargs.get("n", 1)), 1)
 
         # 使用配置文件中的模型，如果没有指定则抛出异常
@@ -97,28 +92,17 @@ class LLMActionSelector:
                 )[0]
 
                 # 解析响应
-                # print(f"\n[LLM Action Selection] Prompt: {prompt}")
-                # selected_idx = self._parse_selected_action_idx(response)
-                # 打印响应到/home/lsp/alphasql/Alpha-SQL/results目录下新建一个txt文件，并且追加形式写入，不用根据时间
-                
                 selected_idx = self._parse_selected_action(valid_actions, response)
 
                 # 验证选择的索引
                 if 0 <= selected_idx < len(valid_actions):
-                    # print(f"\n[LLM Action Selection] Selected: {self.get_action_description(valid_actions[selected_idx].__class__)}")
                     return valid_actions[selected_idx]
                 else:
                     print("[LLM Action Selection] Error Response")
+                    print(f"  prompt: {prompt}")
                     print(f"  response: {response}")
                     print(f"  valid_actions: {self._format_valid_actions(valid_actions)}")
                     print(f"  path_info: {self._format_path_info(node)}")
-                    # 并且打印到/home/lsp/alphasql/Alpha-SQL/results下面新建一个txt文件里面
-                    with open("/home/lsp/alphasql/Alpha-SQL/results/error_log1.txt", "a") as f:
-                        f.write(f"\n[LLM Action Selection] Prompt:\n{prompt}\n")
-                        f.write(f"[LLM Action Selection] Error Response\n")
-                        f.write(f"  response: {response}\n")
-                        f.write(f"  valid_actions: {self._format_valid_actions(valid_actions)}\n")
-                        f.write(f"  path_info: {self._format_path_info(node)}\n")
 
                 if retry_idx < retry_times - 1:
                     continue
@@ -128,24 +112,11 @@ class LLMActionSelector:
                 print(f"  error: {e}")
                 print(f"  valid_actions: {self._format_valid_actions(valid_actions)}")
                 print(f"  path_info: {self._format_path_info(node)}")
-                # 并且打印到/home/lsp/alphasql/Alpha-SQL/results下面新建一个txt文件里面
-                with open("/home/lsp/alphasql/Alpha-SQL/results/error_log2.txt", "a") as f:
-                    f.write(f"\n[LLM Action Selection] Prompt:\n{prompt}\n")
-                    f.write(f"[LLM Action Selection] Error\n")
-                    f.write(f"  error: {e}\n")
-                    f.write(f"  valid_actions: {self._format_valid_actions(valid_actions)}\n")
-                    f.write(f"  path_info: {self._format_path_info(node)}\n")
                 if retry_idx < retry_times - 1:
                     continue
 
         # 重试耗尽后，返回默认策略
         print("[LLM Action Selection] Failed to parse response after retries, using default strategy")
-        # 写进文件
-        with open("/home/lsp/alphasql/Alpha-SQL/results/error_log2.txt", "a") as f:
-            f.write(f"[LLM Action Selection] Failed to parse response after retries, using default strategy\n")
-            f.write(f"  valid_actions: {self._format_valid_actions(valid_actions)}\n")
-            f.write(f"  path_info: {self._format_path_info(node)}\n")
-            f.write(f"  last_prompt: {prompt}\n")
         return self._default_action_selection(node, valid_actions)
 
     def _parse_selected_action_idx(self, response: str) -> int:

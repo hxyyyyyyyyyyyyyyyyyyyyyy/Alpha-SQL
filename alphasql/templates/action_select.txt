@@ -1,4 +1,50 @@
-You are an expert SQL query generator. Given the current state of SQL query generation process, select the most appropriate next action.
+**Task Description:**
+You are an expert SQL query generator. Given the current state of SQL query generation process, please analyze the current state and select the most appropriate next action.
+
+**Consider:**
+1. Have we done enough preparation to generate SQL? If done, feel free to generate SQL directly, If not, please consider what information is still missing and choose actions that help gather more information.
+2. What is the logical next step in the SQL generation process?
+3. If SQL has been generated, check its compilation status to decide next steps. If SQL compilation FAILED, you have to choose "SQL Revision".
+
+**Rules:**
+1. You MUST choose exactly one action from Available Actions.
+2. Copy the action name EXACTLY from Available Actions (case-sensitive, no rewrite).
+3. Do NOT output any action that is not in Available Actions.
+4. Do NOT choose an already executed action.
+5. If SQL compilation FAILED and "SQL Revision" is in Available Actions, choose "SQL Revision".
+
+Here is an example:
+
+Database Tables:
+Tables: customers, orders
+
+Current State:
+Question: For orders placed in 2023, how many have total_amount greater than 500 and status is missing?
+Hint: placed in 2023 refers to order_date >= '2023-01-01' and order_date < '2024-01-01'; status is missing refers to status is null or status = ''
+- Selected Schema: 2 tables
+- Identified Column Values: To answer the question, I need to filter `T2.order_date` in 2023 and `T2.total_amount` > 500, and check missing `T2.status`...
+- Identified Functions: To answer "how many", I should use COUNT(*) on filtered orders...
+- Generated SQL: SELECT COUNT(*) FROM customers AS t1 JOIN orders AS t2 ON t1.customer_id = t2.customer_id WHERE t2.order_date >= '2023-01-01' AND t2.order_date < '2024-01-01' AND t2.total_amount > 500 AND (t2.status IS NULL OR t2.status = '')
+  ✗ SQL Compilation: FAILED
+  Error: no such column: t1.customer_id
+
+Executed Actions: SchemaSelectionAction, IdentifyColumnValuesAction, IdentifyColumnFunctionsAction, SQLGenerationAction
+Current Depth: 4
+
+Available Actions:
+1. End: Finish the current reasoning path
+2. SQL Revision: Revise the previously generated SQL query based on execution results
+
+Answer:
+```json
+{{
+    "reasoning": "The SQL has already been generated but failed compilation with error 'no such column: t2.set_id', which indicates the current query is invalid and must be corrected. According to the rules, when SQL compilation FAILED and 'SQL Revision' is available, the next action must be 'SQL Revision'.",
+    "selected_action": "SQL Revision"
+}}
+```
+
+**************************
+Now, answer the real question, and you need to follow the answer style of the above examples.
 
 Database Tables:
 {schema_summary}
@@ -9,24 +55,4 @@ Current State:
 Available Actions:
 {action_options_str}
 
-Please analyze the current state and choose the best next action. Consider:
-1. Have we done enough preparation to generate SQL? If done, feel free to generate SQL directly, If not, choose actions that help gather more information.
-2. What information is still missing?
-3. What is the logical next step in the SQL generation process?
-4. If SQL has been generated, check its compilation status to decide next steps.
-
-Rules:
-1. You MUST choose exactly one action from Available Actions.
-2. Copy the action name EXACTLY from Available Actions (case-sensitive, no rewrite).
-3. Do NOT output any action that is not in Available Actions.
-4. Do NOT choose an already executed action.
-5. If SQL compilation FAILED and "SQL Revision" is in Available Actions, choose "SQL Revision".
-6. If SQL compilation PASSED and "End" is in Available Actions, choose "End".
-
-Respond in the following JSON format:
-```json
-{{
-    "reasoning": "Your reasoning for choosing this action",
-    "selected_action": "exact action name from Available Actions"
-}}
-```
+Answer:
