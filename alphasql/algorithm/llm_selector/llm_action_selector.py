@@ -51,8 +51,6 @@ class LLMActionSelector:
         
         action_options_str = "\n".join(action_options)
         
-        # 获取schema信息 - 只保留表名称和数量，不使用完整schema
-        schema_len = node.schema_context.count("CREATE TABLE")
         if node.selected_schema_context:
             # 如果已经做过schema selection，提取表名
             schema_summary = self._extract_table_names(node.selected_schema_context)
@@ -66,7 +64,6 @@ class LLMActionSelector:
                 "context": context,
                 "schema_summary": schema_summary,
                 "action_options_str": action_options_str,
-                "len_valid_actions": str(len(valid_actions))
             }
         )
         
@@ -254,17 +251,17 @@ class LLMActionSelector:
                         db_path = str(Path(path_node.db_root_dir) / path_node.db_id / f"{path_node.db_id}.sqlite")
                         sql_execution_result = cached_execute_sql_with_timeout(db_path, path_node.revised_sql_query)
                         if sql_execution_result.result_type.value == "success":
-                            context_parts.append(f"  ✓ SQL Compilation: PASSED")
+                            context_parts.append(f"- SQL Compilation: PASSED")
                             execution_result_str = format_execution_result(sql_execution_result, row_limit=2, val_length_limit=50)
                             context_parts.append(f"  Execution Result Preview:\n{execution_result_str}")
                         else:
-                            context_parts.append(f"  ✗ SQL Compilation: FAILED")
+                            context_parts.append(f"- SQL Compilation: FAILED")
                             context_parts.append(f"  Error: {sql_execution_result.error_message}")
         
-        if executed_actions:
-            context_parts.append(f"\nExecuted Actions: {', '.join(executed_actions)}")
+        # if executed_actions:
+        #     context_parts.append(f"\nExecuted Actions: {', '.join(executed_actions)}")
         
-        context_parts.append(f"Current Depth: {node.depth}")
+        # context_parts.append(f"Current Depth: {node.depth}")
         
         return "\n".join(context_parts)
     

@@ -6,7 +6,7 @@ max_rollout_steps: 1
 max_depth: 8
 exploration_constant: 1.414
 random_seed: 42
-save_root_dir: "results/llm_guided_fix_1_3/Qwen2.5-Coder-7B-Instruct/bird/dev"
+save_root_dir: "results/llm_guided_fix_1_4/Qwen2.5-Coder-7B-Instruct/bird/dev"
 mcts_model_kwargs:
     model: "Qwen/Qwen2.5-Coder-7B-Instruct"
     n: 3
