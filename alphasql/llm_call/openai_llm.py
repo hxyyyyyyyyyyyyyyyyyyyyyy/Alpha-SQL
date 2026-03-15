@@ -34,17 +34,6 @@ def call_openai(prompt: str,
     if api_key is not None:
         client.api_key = api_key
     retrying = 0
-    
-    response = client.post(
-        "/tokenize", 
-        body={
-            "model": model,
-            "prompt": prompt
-        }
-    )
-    if len(response["tokens"]) > MAX_INPUT_TOKENS:
-        raise ValueError(f"Input text is too long: {len(response['tokens'])} tokens, max allowed is {MAX_INPUT_TOKENS} tokens.")
-
     while retrying < MAX_RETRYING_TIMES:
         try:
             if n == 1 or (n > 1 and n_strategy == N_CALLING_STRATEGY_SINGLE):
