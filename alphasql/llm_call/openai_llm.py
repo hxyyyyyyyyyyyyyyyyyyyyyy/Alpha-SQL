@@ -2,6 +2,7 @@ from openai import OpenAI
 import dotenv
 from typing import List, Optional
 from alphasql.llm_call.cost_recoder import CostRecorder
+from transformers import AutoTokenizer
 import time
 
 dotenv.load_dotenv(override=True)
@@ -10,7 +11,7 @@ DEFAULT_COST_RECORDER = CostRecorder(model="gpt-3.5-turbo")
 
 MAX_RETRYING_TIMES = 5
 
-MAX_INPUT_TOKENS = 131072
+MAX_INPUT_TOKENS = 120000
 
 # MAX_TIMEOUT = 60
 
@@ -35,10 +36,16 @@ def call_openai(prompt: str,
         client.api_key = api_key
     retrying = 0
     
-    tokens = tokenizer.encode(text)
-    if len(tokens) > MAX_INPUT_TOKENS:
-        raise ValueError(f"Input text is too long: {len(tokens)} tokens, max allowed is {MAX_INPUT_TOKENS} tokens.")
-    
+    response = client.post(
+        "/tokenize", 
+        body={
+            "model": model,
+            "prompt": prompt
+        }
+    )
+    if len(response["tokens"]) > MAX_INPUT_TOKENS:
+        raise ValueError(f"Input text is too long: {len(response['tokens'])} tokens, max allowed is {MAX_INPUT_TOKENS} tokens.")
+
     while retrying < MAX_RETRYING_TIMES:
         try:
             if n == 1 or (n > 1 and n_strategy == N_CALLING_STRATEGY_SINGLE):
