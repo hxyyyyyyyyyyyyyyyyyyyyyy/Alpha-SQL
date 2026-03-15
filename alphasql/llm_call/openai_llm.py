@@ -10,6 +10,8 @@ DEFAULT_COST_RECORDER = CostRecorder(model="gpt-3.5-turbo")
 
 MAX_RETRYING_TIMES = 5
 
+MAX_INPUT_TOKENS = 131072
+
 # MAX_TIMEOUT = 60
 
 N_CALLING_STRATEGY_SINGLE = "single"
@@ -32,6 +34,11 @@ def call_openai(prompt: str,
     if api_key is not None:
         client.api_key = api_key
     retrying = 0
+    
+    tokens = tokenizer.encode(text)
+    if len(tokens) > MAX_INPUT_TOKENS:
+        raise ValueError(f"Input text is too long: {len(tokens)} tokens, max allowed is {MAX_INPUT_TOKENS} tokens.")
+    
     while retrying < MAX_RETRYING_TIMES:
         try:
             if n == 1 or (n > 1 and n_strategy == N_CALLING_STRATEGY_SINGLE):
