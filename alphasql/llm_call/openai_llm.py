@@ -2,7 +2,6 @@ from openai import OpenAI
 import dotenv
 from typing import List, Optional
 from alphasql.llm_call.cost_recoder import CostRecorder
-from transformers import AutoTokenizer
 import time
 
 dotenv.load_dotenv(override=True)

@@ -256,8 +256,9 @@ def build_table_ddl_statement(table_schema_dict: Dict[str, Dict[str, Any]],
         if add_value_description and column_schema["value_description"].strip() != "":
             comment_parts.append(f"Value Description: {column_schema['value_description']}")
         if add_value_examples and len(column_schema["value_examples"]) > 0 and column_schema["column_type"].upper() == "TEXT":
-            if all(len(str(v)) <= max_example_length for v in column_schema["value_examples"]):
-                comment_parts.append(f"Value Examples: {', '.join([f'`{value}`' for value in column_schema['value_examples']])}")
+            comment_parts.append(f"Value Examples: {', '.join([f'`{value}`' for value in column_schema['value_examples']])}")
+            # if all(len(str(v)) <= max_example_length for v in column_schema["value_examples"]):
+            #     comment_parts.append(f"Value Examples: {', '.join([f'`{value}`' for value in column_schema['value_examples']])}")
         if len(comment_parts) > 0:
             column_statement += f" -- {' | '.join(comment_parts)}"
         statement += column_statement + "\n"
