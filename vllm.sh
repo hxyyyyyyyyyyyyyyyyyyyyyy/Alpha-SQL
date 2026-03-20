@@ -1,4 +1,9 @@
 conda activate vllm
+
+CUDA_VISIBLE_DEVICES=0,1 vllm serve /mnt/chenbang/models/Qwen2.5-Coder-7B-Instruct --served-model-name Qwen/Qwen2.5-Coder-7B-Instruct --port 9999 -tp 2 --max-num-seqs 64 --max-model-len 131072
+
+CUDA_VISIBLE_DEVICES=2,3 vllm serve /mnt/chenbang/models/DeepSeek-Coder-V2-Lite-Instruct --served-model-name deepseek/DeepSeek-Coder-V2-Lite-Instruct --port 10000 -tp 2 --max-num-seqs 64 --max-model-len 131072
+
 CUDA_VISIBLE_DEVICES=1 vllm serve Qwen/Qwen3-8B --served-model-name Qwen/Qwen3-8B --port 9999 -tp 1 
 
 CUDA_VISIBLE_DEVICES=1 vllm serve Qwen/Qwen2.5-Coder-7B-Instruct --served-model-name Qwen/Qwen2.5-Coder-7B-Instruct --port 10000 -tp 1 --rope-scaling '{"rope_type":"yarn","factor":4.0,"original_max_position_embeddings":32768}' --max-model-len 131072
