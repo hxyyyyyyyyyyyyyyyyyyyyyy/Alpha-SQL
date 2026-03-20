@@ -1,0 +1,1 @@
+请对比result/origin1，result/llm_guided_fix_1_1和result/llm_guided1文件夹中的结果，比较文件夹中大模型选择节点的处理逻辑，尤其是节点触发频次和顺序是否明显变化，以及各种不同action选择路径的出现频率
