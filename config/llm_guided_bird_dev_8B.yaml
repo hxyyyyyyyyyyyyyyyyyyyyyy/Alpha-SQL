@@ -6,9 +6,9 @@ max_rollout_steps: 1
 max_depth: 8
 exploration_constant: 1.414
 random_seed: 42
-save_root_dir: "results/llm_guided1_1/deepseek/DeepSeek-Coder-V2-Lite-Instruct/bird/dev"
+save_root_dir: "results/llm_guided24/Qwen3-8B/bird/dev"
 mcts_model_kwargs:
-    model: "deepseek/DeepSeek-Coder-V2-Lite-Instruct"
+    model: "Qwen/Qwen3-8B"
     n: 3
     top_p: 0.8
     max_tokens: 4096
