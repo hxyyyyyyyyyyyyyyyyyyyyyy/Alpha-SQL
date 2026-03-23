@@ -5,7 +5,7 @@ n_processes: 32
 max_rollout_steps: 1
 max_depth: 16
 exploration_constant: 1.414
-save_root_dir: "results/origin/Qwen3-8B/bird/dev"
+save_root_dir: "results/origin1/Qwen3-8B/bird/dev"
 mcts_model_kwargs:
     model: "Qwen/Qwen3-8B"
     n: 3

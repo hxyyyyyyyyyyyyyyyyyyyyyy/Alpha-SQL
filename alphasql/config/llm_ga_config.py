@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Dict, Any, Optional
 
 
@@ -22,3 +22,4 @@ class LLMGAConfig(BaseModel):
     ga_crossover_rate: float = 0.7
     ga_mutation_rate: float = 0.3
     ga_tournament_size: int = 3
+    epsilon: float = Field(default=0.0, ge=0.0, le=1.0)

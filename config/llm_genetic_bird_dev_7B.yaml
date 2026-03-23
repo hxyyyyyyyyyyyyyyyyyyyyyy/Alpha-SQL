@@ -5,6 +5,7 @@ n_processes: 8
 max_depth: 8
 max_path_steps: 8
 random_seed: 42
+epsilon: 0.0
 save_root_dir: "results/llm_genetic_fix/Qwen2.5-Coder-7B-Instruct/bird/dev"
 
 mcts_model_kwargs:

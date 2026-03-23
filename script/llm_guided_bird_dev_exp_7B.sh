@@ -4,7 +4,7 @@ start_time=$(date +%s)
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 
 # Use a single source of truth for config to avoid echo/run mismatch.
-CONFIG_PATH="${1:-config/llm_guided_bird_dev_7B_2.yaml}"
+CONFIG_PATH="${1:-config/llm_guided_bird_dev_7B.yaml}"
 
 echo "=========================================="
 echo "Running LLM-Guided Mode (No MCTS)"

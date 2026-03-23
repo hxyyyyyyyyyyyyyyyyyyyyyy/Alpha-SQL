@@ -2,7 +2,6 @@ import os
 import pickle
 import json
 from collections import defaultdict
-from pathlib import Path
 
 
 def find_pkl_folders(results_dir):
@@ -16,6 +15,19 @@ def find_pkl_folders(results_dir):
                 pkl_folders.add(root)
                 break
     return sorted(list(pkl_folders))
+
+
+def is_folder_already_summarized(pkl_folder):
+    """
+    判断当前 pkl 文件夹是否已经完成汇总生成
+    """
+    output_dir = os.path.dirname(pkl_folder)
+    required_outputs = [
+        "summary_sqls.txt",
+        "summary_paths.json",
+        "summary_statistics.md",
+    ]
+    return all(os.path.exists(os.path.join(output_dir, name)) for name in required_outputs)
 
 
 def extract_node_type(node):
@@ -179,11 +191,18 @@ def main():
         print(f"  - {folder}")
     print()
     
-    # 处理每个文件夹
+    # 处理每个文件夹（已完成汇总的目录将被跳过）
+    skipped_count = 0
+    processed_count = 0
     for pkl_folder in pkl_folders:
+        if is_folder_already_summarized(pkl_folder):
+            print(f"Skipping already summarized folder: {pkl_folder}")
+            skipped_count += 1
+            continue
         process_pkl_folder(pkl_folder)
+        processed_count += 1
     
-    print("All folders processed successfully!")
+    print(f"All done. Processed: {processed_count}, Skipped: {skipped_count}")
 
 
 if __name__ == "__main__":

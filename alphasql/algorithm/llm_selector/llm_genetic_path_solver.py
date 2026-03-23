@@ -45,6 +45,7 @@ class LLMGeneticPathSolver:
         max_path_steps: int,
         save_root_dir: str,
         llm_kwargs: Dict[str, Any],
+        epsilon: float,
         llm_seed_num_paths: int,
         llm_seed_num_retry: int,
         target_num_paths: int,
@@ -61,6 +62,7 @@ class LLMGeneticPathSolver:
         self.max_path_steps = max_path_steps
         self.save_root_dir = save_root_dir
         self.llm_kwargs = llm_kwargs
+        self.epsilon = epsilon
 
         self.llm_seed_num_paths = llm_seed_num_paths
         self.llm_seed_num_retry = max(1, llm_seed_num_retry)
@@ -73,7 +75,7 @@ class LLMGeneticPathSolver:
         self.ga_tournament_size = max(1, ga_tournament_size)
 
         self.rng = random.Random(random_seed)
-        self.action_selector = LLMActionSelector(llm_kwargs)
+        self.action_selector = LLMActionSelector(llm_kwargs, epsilon=epsilon)
 
         self.generated_records: List[Dict[str, Any]] = []
 
