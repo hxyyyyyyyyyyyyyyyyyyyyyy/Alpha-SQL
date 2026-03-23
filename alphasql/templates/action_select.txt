@@ -21,8 +21,6 @@ Current State:
 Question: For orders placed in 2023, how many have total_amount greater than 500 and status is missing?
 Hint: placed in 2023 refers to order_date >= '2023-01-01' and order_date < '2024-01-01'; status is missing refers to status is null or status = ''
 - Rephrased Question: Count orders in 2023 with total_amount > 500 and missing status (NULL or empty string).
-- Identified Column Values: To answer the question, I need to filter `T2.order_date` in 2023 and `T2.total_amount` > 500, and check missing `T2.status`...
-- Identified Functions: To answer "how many", I should use COUNT(*) on filtered orders...
 - Generated SQL: SELECT COUNT(*) FROM customers AS t1 JOIN orders AS t2 ON t1.customer_id = t2.customer_id WHERE t2.order_date >= '2023-01-01' AND t2.order_date < '2024-01-01' AND t2.total_amount > 500 AND (t2.status IS NULL OR t2.status = '')
 - SQL Compilation: FAILED
   Error: no such column: t1.customer_id
@@ -32,11 +30,13 @@ Available Actions:
 2. SQL Revision: Revise the previously generated SQL query based on execution results
 
 Answer:
-```json
-{{
-    "reasoning": "The SQL has already been generated but failed compilation with error 'no such column: t1.customer_id', which indicates the current query is invalid and must be corrected. Given the current state and available actions, the most appropriate next action is 'SQL Revision'.",
-    "selected_action": "SQL Revision"
-}}
+```xml
+<think>
+The SQL has already been generated but failed compilation with error 'no such column: t1.customer_id', which indicates the current query is invalid and must be corrected. Given the current state and available actions, the most appropriate next action is 'SQL Revision'.
+</think>
+<answer>
+SQL Revision
+</answer>
 ```
 
 **************************
@@ -52,3 +52,5 @@ Available Actions:
 {action_options_str}
 
 Answer:
+
+Only output xml format (starting with ```xml and ending with ```) as your response.

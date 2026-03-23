@@ -58,6 +58,7 @@ class LLMGuidedRunner:
             max_depth=self.config.max_depth,
             save_root_dir=self.config.save_root_dir,
             llm_kwargs=self.config.mcts_model_kwargs,
+            epsilon=self.config.epsilon,
             reward_model=MajorityVoteRewardModel(self.config.reward_model_kwargs),
             num_paths=self.config.max_rollout_steps  # 与MCTS对齐：max_rollout_steps表示路径/rollout次数
         )

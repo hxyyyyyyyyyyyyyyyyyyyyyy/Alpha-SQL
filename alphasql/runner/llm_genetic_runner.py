@@ -47,6 +47,7 @@ class LLMGeneticRunner:
             max_path_steps=self.config.max_path_steps,
             save_root_dir=self.config.save_root_dir,
             llm_kwargs=self.config.mcts_model_kwargs,
+            epsilon=self.config.epsilon,
             llm_seed_num_paths=self.config.llm_seed_num_paths,
             llm_seed_num_retry=self.config.llm_seed_num_retry,
             target_num_paths=self.config.target_num_paths,

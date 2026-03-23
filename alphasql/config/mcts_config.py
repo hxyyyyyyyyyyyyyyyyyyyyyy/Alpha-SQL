@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Dict, Any, Optional
 
 class MCTSConfig(BaseModel):
@@ -16,3 +16,4 @@ class MCTSConfig(BaseModel):
     mcts_model_kwargs: Dict[str, Any]
     reward_model_kwargs: Optional[Dict[str, Any]] = None
     random_seed: Optional[int] = 42
+    epsilon: float = Field(default=0.0, ge=0.0, le=1.0)

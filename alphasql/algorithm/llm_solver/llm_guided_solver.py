@@ -23,6 +23,7 @@ class LLMGuidedSolver:
                  max_depth: int,
                  save_root_dir: str,
                  llm_kwargs: Dict[str, Any],
+                 epsilon: float,
                  reward_model: RewardModel,
                  num_paths: int = 1):
         """
@@ -33,6 +34,7 @@ class LLMGuidedSolver:
             max_depth: 最大深度
             save_root_dir: 保存结果的根目录
             llm_kwargs: 大模型调用参数
+            epsilon: epsilon-greedy中的探索概率
             reward_model: 奖励模型
             num_paths: 生成的推理路径数量
         """
@@ -44,9 +46,10 @@ class LLMGuidedSolver:
         self.max_depth = max_depth
         self.save_root_dir = save_root_dir
         self.num_paths = num_paths
+        self.epsilon = epsilon
         
         # 创建LLM action选择器
-        self.action_selector = LLMActionSelector(llm_kwargs)
+        self.action_selector = LLMActionSelector(llm_kwargs, epsilon=epsilon)
     
     def generate_one_path(self, root_node: MCTSNode) -> List[MCTSNode]:
         """

@@ -5,7 +5,7 @@ from alphasql.llm_call.openai_llm import call_openai
 from alphasql.database.sql_execution import cached_execute_sql_with_timeout, format_execution_result
 from typing import Dict, Any, List, Optional
 from pathlib import Path
-import json
+import random
 import re
 
 ACTION_SELECTION_TEMPERATURE = 0.3
@@ -16,8 +16,11 @@ class LLMActionSelector:
     使用大模型进行action选择，替代MCTS的UCB选择策略
     """
     
-    def __init__(self, llm_kwargs: Dict[str, Any]):
+    def __init__(self, llm_kwargs: Dict[str, Any], epsilon: float = 0.0):
         self.llm_kwargs = llm_kwargs
+        if not 0.0 <= epsilon <= 1.0:
+            raise ValueError(f"epsilon must be in [0.0, 1.0], got {epsilon}")
+        self.epsilon = epsilon
     
     def get_action_description(self, action_class) -> str:
         """获取action的描述信息"""
@@ -39,6 +42,10 @@ class LLMActionSelector:
         """
         if len(valid_actions) == 1:
             return valid_actions[0]
+
+        # epsilon-greedy: 以 epsilon 概率随机探索，否则走 LLM 决策。
+        if random.random() < self.epsilon:
+            return random.choice(valid_actions)
 
         # 构建当前状态的上下文
         context = self._build_context(node)
@@ -116,18 +123,27 @@ class LLMActionSelector:
         print("[LLM Action Selection] Failed to parse response after retries, using default strategy")
         return self._default_action_selection(node, valid_actions)
 
-    def _parse_selected_action_idx(self, response: str) -> int:
-        # 1) 优先解析 ```json ... ``` 代码块
-        json_match = re.search(r"```json\n(.*?)```(.*?)", response, flags=re.DOTALL)
-        if json_match:
-            try:
-                result = json.loads(json_match.group(1))
-                selected_action_number = int(result["selected_action_number"])
-                return selected_action_number - 1
-            except Exception:
-                pass
+    def _extract_selected_action_from_xml(self, response: str) -> Optional[str]:
+        """从模型输出中提取<answer>标签内容，支持```xml代码块和裸XML。"""
+        xml_blocks = re.findall(r"```xml\s*(.*?)\s*```", response, flags=re.DOTALL | re.IGNORECASE)
+        candidates = xml_blocks + [response]
 
-        return -1
+        for candidate in candidates:
+            answer_match = re.search(r"<answer>\s*(.*?)\s*</answer>", candidate, flags=re.DOTALL | re.IGNORECASE)
+            if not answer_match:
+                continue
+
+            answer = answer_match.group(1).strip()
+            if not answer:
+                continue
+
+            # 仅取首个非空行，避免解释文字混入
+            for line in answer.splitlines():
+                cleaned = line.strip()
+                if cleaned:
+                    return cleaned
+
+        return None
     
     def _parse_selected_action(self, valid_actions: List[MCTSAction], response: str) -> int:
         def normalize_text(text: str) -> str:
@@ -136,30 +152,15 @@ class LLMActionSelector:
         def compact_text(text: str) -> str:
             return re.sub(r"[^a-z0-9]", "", normalize_text(text))
 
-        def parse_json_payload(raw_response: str) -> Optional[Dict[str, Any]]:
-            json_block_match = re.search(r"```json\s*(\{.*?\})\s*```", raw_response, flags=re.DOTALL)
-            if json_block_match:
-                try:
-                    return json.loads(json_block_match.group(1))
-                except Exception:
-                    pass
+        def strip_numeric_prefix(text: str) -> str:
+            # 兼容 "2. SQL Revision" 这类输出
+            return re.sub(r"^\s*\d+\s*[\.)]\s*", "", text).strip()
 
-            raw_json_match = re.search(r"\{.*\}", raw_response, flags=re.DOTALL)
-            if raw_json_match:
-                try:
-                    return json.loads(raw_json_match.group(0))
-                except Exception:
-                    pass
-
-            return None
-
-        payload = parse_json_payload(response)
-        if not payload:
+        selected_action = self._extract_selected_action_from_xml(response)
+        if not selected_action:
             return -1
 
-        selected_action = payload.get("selected_action")
-        if not isinstance(selected_action, str):
-            return -1
+        selected_action = strip_numeric_prefix(selected_action)
 
         selected_normalized = normalize_text(selected_action)
         selected_name = normalize_text(selected_action.split(":", 1)[0])
