@@ -18,9 +18,6 @@ META_TIME_OUT="${META_TIME_OUT:-30.0}"
 FILL_MISSING_ERROR="${FILL_MISSING_ERROR:-false}"
 
 RESULTS_ROOT="${1:-results}"
-SUMMARY_DIR="${RESULTS_ROOT}/summary"
-
-mkdir -p "$SUMMARY_DIR"
 
 mapfile -t RESULT_DIRS < <(find "$RESULTS_ROOT" -type d -path "*/bird/dev" | sort)
 
@@ -37,14 +34,12 @@ for RESULTS_DIR in "${RESULT_DIRS[@]}"; do
         continue
     fi
 
-    REL_DIR="${RESULTS_DIR#${RESULTS_ROOT}/}"
-    SAFE_NAME="${REL_DIR//\//__}"
-
-    PRED_SQL_PATH="${SUMMARY_DIR}/${SAFE_NAME}_pred_sqls.json"
-    EVAL_OUTPUT_PATH="${SUMMARY_DIR}/${SAFE_NAME}_evaluation.txt"
+    OUTPUT_BIRD_DIR="$(dirname "$RESULTS_DIR")"
+    PRED_SQL_PATH="${OUTPUT_BIRD_DIR}/pred_sqls.json"
+    EVAL_OUTPUT_PATH="${OUTPUT_BIRD_DIR}/evaluation.txt"
 
     if [ -f "$PRED_SQL_PATH" ] && [ -f "$EVAL_OUTPUT_PATH" ]; then
-        echo "Skipping ${RESULTS_DIR}: Output files already exist."
+        echo "Skipping ${RESULTS_DIR}: output files already exist in ${OUTPUT_BIRD_DIR}."
         continue
     fi
 
@@ -74,4 +69,4 @@ for RESULTS_DIR in "${RESULT_DIRS[@]}"; do
     echo "Done: ${RESULTS_DIR}"
 done
 
-echo "All finished. Outputs are in ${SUMMARY_DIR}"
+echo "All finished. Outputs are in each corresponding bird folder."

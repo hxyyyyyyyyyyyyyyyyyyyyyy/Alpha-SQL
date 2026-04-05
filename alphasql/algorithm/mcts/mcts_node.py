@@ -32,6 +32,7 @@ class MCTSNode:
                  final_sql_query: Optional[str] = None,
                  consistency_score: Optional[float] = None,
                  is_valid_sql_query: Optional[bool] = None,
+                 node_score: Optional[float] = None,
                  llm_kwargs: Optional[Dict[str, Any]] = None
                  ):
         self.node_type = node_type
@@ -57,6 +58,7 @@ class MCTSNode:
         self.final_sql_query = final_sql_query
         self.consistency_score = consistency_score
         self.is_valid_sql_query = is_valid_sql_query
+        self.node_score = node_score
         self.llm_kwargs = llm_kwargs
 
         self.Q = 0
