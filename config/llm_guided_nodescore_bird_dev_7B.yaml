@@ -1,16 +1,15 @@
 tasks_file_path: "data/preprocessed/bird/dev/tasks.pkl"
-# subset_file_path: "data/bird/dev/chess.json"
-subset_file_path: null
+subset_file_path: "data/bird/dev/chess.json"
 db_root_dir: "data/bird/dev/dev_databases"
 n_processes: 8
-max_rollout_steps: 24
+max_rollout_steps: 1
 max_depth: 8
 exploration_constant: 1.414
 random_seed: 42
 epsilon: 0.2
-save_root_dir: "results/llm_guide24_eps0.2/Qwen3-8B/bird/dev"
+save_root_dir: "results/llm_guided_nodescore/Qwen2.5-Coder-7B-Instruct/bird/dev"
 mcts_model_kwargs:
-    model: "Qwen/Qwen3-8B"
+    model: "Qwen/Qwen2.5-Coder-7B-Instruct"
     n: 3
     top_p: 0.8
     max_tokens: 4096
