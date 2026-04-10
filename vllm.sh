@@ -1,5 +1,9 @@
 conda activate vllm
 
+CUDA_VISIBLE_DEVICES=0 vllm serve /mnt/chenbang/models/gemma-4-E4B-it --served-model-name google/gemma-4-E4B-it --port 9999 -tp 1 --max-num-seqs 128
+
+CUDA_VISIBLE_DEVICES=0,1,2,3 vllm serve /mnt/chenbang/models/gemma-4-31B-it --served-model-name google/gemma-4-31B-it --port 9999 -tp 4 --max-num-seqs 128
+
 CUDA_VISIBLE_DEVICES=0,1 vllm serve /mnt/chenbang/models/Qwen3-8B --served-model-name Qwen/Qwen3-8B --port 9999 -tp 2 --max-num-seqs 128
 
 CUDA_VISIBLE_DEVICES=2,3 vllm serve /mnt/chenbang/models/Qwen3-8B --served-model-name Qwen/Qwen3-8B --port 10000 -tp 2 --max-num-seqs 128

@@ -6,7 +6,7 @@ bash script/llm_guided_bird_dev_exp_7B.sh > log/qwen7b_bird_dev_exp_llm.log 2>&1
 
 bash script/llm_guided_bird_dev_exp_7B_test.sh > log/qwen7b_bird_dev_exp_llm.log 2>&1
 
-bash script/sql_selection.sh
+bash script/sql_selection_all_results.sh
 
 bash script/run_eval.sh results/llm_guide24_eps0.2_chess_0
 
