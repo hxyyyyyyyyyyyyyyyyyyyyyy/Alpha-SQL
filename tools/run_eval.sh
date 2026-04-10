@@ -62,7 +62,7 @@ if is_step_b_done; then
     echo "[Step B] Skip: all tasks are already completed."
 else
     echo "[Step B] Run sql selection + evaluation for all subsets"
-    bash tools/sql_selection_all_results.sh "$RESULTS_ROOT"
+    bash tools/sql_selection.sh "$RESULTS_ROOT"
 fi
 
 if is_step_c_done; then

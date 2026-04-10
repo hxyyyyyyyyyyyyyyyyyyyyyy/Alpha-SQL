@@ -3,7 +3,6 @@
 set -euo pipefail
 
 start_time=$(date +%s)
-export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 
 CONFIG_PATH="${1:-config/llm_nodescore_bird.yaml}"
 

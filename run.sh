@@ -1,12 +1,14 @@
-bash script/qwen7b_bird_dev_exp.sh > log/qwen7b_bird_dev_exp.log 2>&1
+mkdir -p log
 
-bash script/qwen32b_bird_dev_exp.sh > log/qwen32b_bird_dev_exp.log 2>&1
+bash script/origin_bird_dev.sh > log/origin_bird_dev.log 2>&1
 
-bash script/llm_guided_bird_dev_exp_7B.sh > log/qwen7b_bird_dev_exp_llm.log 2>&1
+bash script/llm_guided_bird.sh > log/llm_guided_bird.log 2>&1
 
-bash script/llm_guided_bird_dev_exp_7B_test.sh > log/qwen7b_bird_dev_exp_llm.log 2>&1
+bash script/llm_nodescore_bird.sh > log/llm_nodescore_bird.log 2>&1
 
-bash tools/sql_selection_all_results.sh
+bash script/llm_genetic_bird_dev_7B.sh > log/llm_genetic_bird_dev_7B.log 2>&1
+
+bash tools/sql_selection.sh
 
 bash tools/run_eval.sh results/llm_guide24_eps0.2_chess_0
 

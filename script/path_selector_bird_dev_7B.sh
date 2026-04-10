@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-export PYTHONPATH="${PYTHONPATH}:$(pwd)"
-
 CONFIG_PATH="${1:-config/path_selector_bird_dev_7B.yaml}"
 
 echo "=========================================="

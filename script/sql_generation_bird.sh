@@ -3,7 +3,6 @@
 set -euo pipefail
 
 start_time=$(date +%s)
-export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 
 CONFIG_PATH="${1:-config/sql_generation_bird.yaml}"
 

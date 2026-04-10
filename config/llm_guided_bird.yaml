@@ -9,11 +9,13 @@ max_depth: 8
 exploration_constant: 1.414
 random_seed: 42
 epsilon: 0.2
-save_root_dir: "results/llm_guide24_eps0.2/Qwen2.5-Coder-7B-Instruct/bird/dev"
+save_root_dir: "results/llm_guide24_eps0.2/gemma-4-E4B-it/bird/dev"
+# save_root_dir: "results/llm_guide24_eps0.2/Qwen2.5-Coder-7B-Instruct/bird/dev"
 # save_root_dir: "results/llm_guide24_eps0.2/Qwen3-8B/bird/dev"
-# save_root_dir: "results/llm_guided/Qwen2.5-Coder-32B-Instruct/bird/dev"
+# save_root_dir: "results/llm_guided24_eps0.2/Qwen2.5-Coder-32B-Instruct/bird/dev"
 mcts_model_kwargs:
-    model: "Qwen/Qwen2.5-Coder-7B-Instruct"
+    model: "google/gemma-4-E4B-it"
+    # model: "Qwen/Qwen2.5-Coder-7B-Instruct"
     # model: "Qwen/Qwen3-8B"
     # model: "Qwen/Qwen2.5-Coder-32B-Instruct"
     n: 3
