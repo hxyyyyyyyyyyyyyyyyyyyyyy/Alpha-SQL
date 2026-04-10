@@ -7,8 +7,10 @@ max_rollout_steps: 1
 max_depth: 16
 exploration_constant: 1.414
 save_root_dir: "results/root_sql_generation_end/Qwen2.5-Coder-7B-Instruct/bird/dev"
+# save_root_dir: "results/root_sql_generation_end/Qwen3-8B/bird/dev"
 mcts_model_kwargs:
     model: "Qwen/Qwen2.5-Coder-7B-Instruct"
+    # model: "Qwen/Qwen3-8B"
     n: 3
     top_p: 0.8
     max_tokens: 4096

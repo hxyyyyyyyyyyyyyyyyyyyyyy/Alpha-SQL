@@ -178,10 +178,10 @@ conda activate alphasql
 
 1. Run the following:
     ```bash
-    bash script/sql_selection.sh
+    bash tools/sql_selection.sh
     ```
 
-3. The final `pred_sqls.json` will in the project root dir (defined in `script/sql_selection.sh` OUTPUT_PATH variable)
+3. The final `pred_sqls.json` will in the project root dir (defined in `tools/sql_selection.sh` OUTPUT_PATH variable)
 
 ## 📝 Citation
 If you find our work useful or inspiring, please kindly cite:

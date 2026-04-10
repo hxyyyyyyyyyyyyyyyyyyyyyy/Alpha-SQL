@@ -2,6 +2,9 @@
 
 set -euo pipefail
 
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT_DIR"
+
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 
 RESULTS_DIR="results/full_selector/Qwen2.5-Coder-7B-Instruct/bird/dev"

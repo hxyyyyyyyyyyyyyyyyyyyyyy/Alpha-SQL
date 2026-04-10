@@ -1,13 +1,17 @@
 #!/bin/bash
 
+set -euo pipefail
+
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
+
+CONFIG_PATH="${1:-config/simple_path_selector_bird_dev_7B.yaml}"
 
 echo "=========================================="
 echo "Running Simple-Selector Guided Mode"
-echo "Config: config/simple_path_selector_bird_dev_7B.yaml"
+echo "Config: ${CONFIG_PATH}"
 echo "=========================================="
 
-python -m alphasql.runner.simple_path_selector_runner config/simple_path_selector_bird_dev_7B.yaml
+python -m alphasql.runner.path_selector_runner "${CONFIG_PATH}"
 
 echo "=========================================="
 echo "Simple-Selector Guided Mode Completed!"

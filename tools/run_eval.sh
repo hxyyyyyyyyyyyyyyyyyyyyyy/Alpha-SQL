@@ -56,20 +56,20 @@ is_step_c_done() {
 }
 
 echo "[Step A] Extract subsets from: ${RESULTS_ROOT}"
-python script/subset_extractor.py --results-root "$RESULTS_ROOT"
+python tools/subset_extractor.py --results-root "$RESULTS_ROOT"
 
 if is_step_b_done; then
     echo "[Step B] Skip: all tasks are already completed."
 else
     echo "[Step B] Run sql selection + evaluation for all subsets"
-    bash script/sql_selection_all_results.sh "$RESULTS_ROOT"
+    bash tools/sql_selection_all_results.sh "$RESULTS_ROOT"
 fi
 
 if is_step_c_done; then
     echo "[Step C] Skip: all tasks are already completed."
 else
     echo "[Step C] Run summarize_data.py (summary_paths disabled by default)"
-    python script/summarize_data.py --results-dir "$RESULTS_ROOT"
+    python tools/summarize_data.py --results-dir "$RESULTS_ROOT"
 fi
 
 echo "Done."

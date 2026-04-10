@@ -2,6 +2,9 @@
 
 set -euo pipefail
 
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT_DIR"
+
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 
 SAMPLE_SIZE=4
@@ -38,7 +41,7 @@ done
 AUTO_DESTINATION_DIR="results/random_selector${SAMPLE_SIZE}/Qwen2.5-Coder-7B-Instruct/bird/dev"
 
 CMD=(
-	python script/random_selector_from_full_selector.py
+	python tools/random_selector_from_full_selector.py
 	--strict_expected_size
 	--sample_size "${SAMPLE_SIZE}"
 )
