@@ -1,18 +1,20 @@
 tasks_file_path: "data/preprocessed/bird/dev/tasks.pkl"
 # subset_file_path: "data/bird/dev/chess.json"
-subset_file_path: null
+# subset_file_path: "data/bird/dev/test.json"
+subset_file_path: "data/bird/dev/ball.json"
+# subset_file_path: null
 db_root_dir: "data/bird/dev/dev_databases"
-n_processes: 16
+n_processes: 8
 max_rollout_steps: 24
 max_depth: 16
 exploration_constant: 1.414
-save_root_dir: "results/origin/gemma-4-E4B-it/bird/dev"
-# save_root_dir: "results/origin/Qwen2.5-Coder-7B-Instruct/bird/dev"
+# save_root_dir: "results/origin/gemma-4-E4B-it/bird/dev"
+save_root_dir: "results/origin/Qwen2.5-Coder-7B-Instruct/bird/dev"
 # save_root_dir: "results/origin/Qwen3-8B/bird/dev"
 # save_root_dir: "results/origin/Qwen2.5-Coder-32B-Instruct/bird/dev"
 mcts_model_kwargs:
-    model: "google/gemma-4-E4B-it"
-    # model: "Qwen/Qwen2.5-Coder-7B-Instruct"
+    # model: "google/gemma-4-E4B-it"
+    model: "Qwen/Qwen2.5-Coder-7B-Instruct"
     # model: "Qwen/Qwen3-8B"
     # model: "Qwen/Qwen2.5-Coder-32B-Instruct"
     n: 3
