@@ -3,20 +3,29 @@ tasks_file_path: "data/preprocessed/bird/dev/tasks.pkl"
 # subset_file_path: "data/bird/dev/test.json"
 subset_file_path: null
 db_root_dir: "data/bird/dev/dev_databases"
+<<<<<<< HEAD
 n_processes: 8
+=======
+n_processes: 4
+>>>>>>> 7e33cc32b3460182508b75298bb1e5b654058ecc
 max_rollout_steps: 24
 max_depth: 8
 exploration_constant: 1.414
 random_seed: 42
 epsilon: 0.5
 # save_root_dir: "results/llm_nodescore_eps0.2/gemma-4-E4B-it/bird/dev"
+<<<<<<< HEAD
 save_root_dir: "results/llm_with_nodescore_eps0.5/Qwen2.5-Coder-7B-Instruct/bird/dev"
 # save_root_dir: "results/llm_nodescore_eps0.2/Qwen3-8B/bird/dev"
+=======
+# save_root_dir: "results/llm_nodescore_eps0.2/Qwen2.5-Coder-7B-Instruct/bird/dev"
+save_root_dir: "results/llm_nodescore_eps0.2/Qwen3-8B/bird/dev"
+>>>>>>> 7e33cc32b3460182508b75298bb1e5b654058ecc
 # save_root_dir: "results/llm_nodescore_eps0.2/Qwen2.5-Coder-32B-Instruct/bird/dev"
 mcts_model_kwargs:
     # model: "google/gemma-4-E4B-it"
-    model: "Qwen/Qwen2.5-Coder-7B-Instruct"
-    # model: "Qwen/Qwen3-8B"
+    # model: "Qwen/Qwen2.5-Coder-7B-Instruct"
+    model: "Qwen/Qwen3-8B"
     # model: "Qwen/Qwen2.5-Coder-32B-Instruct"
     n: 3
     top_p: 0.8

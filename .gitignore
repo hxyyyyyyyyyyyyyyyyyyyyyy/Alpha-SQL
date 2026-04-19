@@ -1,5 +1,7 @@
 data
 results
+results_raw
+config
 log
 config
 **/__pycache__
