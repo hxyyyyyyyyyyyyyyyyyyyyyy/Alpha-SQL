@@ -1,0 +1,527 @@
+[
+  {
+    "db_id": "european_football_2",
+    "table_name": "Match",
+    "max_example_length": 8633,
+    "column_name": "cross",
+    "example_preview": "<cross><value><stats><crosses>1</crosses></stats><event_incident_typefk>7</event_incident_typefk><elapsed>7</elapsed><su"
+  },
+  {
+    "db_id": "codebase_community",
+    "table_name": "users",
+    "max_example_length": 527,
+    "column_name": "AboutMe",
+    "example_preview": "<p>Hi, I'm not really a person.</p>\n\n<p>I'm a background process that helps keep this site clean!</p>\n\n<p>I do things li"
+  },
+  {
+    "db_id": "card_games",
+    "table_name": "sets",
+    "max_example_length": 255,
+    "column_name": "booster",
+    "example_preview": "{'default': {'boosters': [{'contents': {'basic': 1, 'common': 10, 'rare': 1, 'uncommon': 3}, 'weight': 1913922}, {'conte"
+  },
+  {
+    "db_id": "card_games",
+    "table_name": "foreign_data",
+    "max_example_length": 206,
+    "column_name": "text",
+    "example_preview": "Daña primero. (Esta criatura hace daño de combate antes que las criaturas sin la habilidad de dañar primero.)\nCuando el "
+  },
+  {
+    "db_id": "codebase_community",
+    "table_name": "posts",
+    "max_example_length": 206,
+    "column_name": "Body",
+    "example_preview": "<p>What are some valuable Statistical Analysis open source projects available right now?</p>\n\n<p>Edit: as pointed out by"
+  },
+  {
+    "db_id": "card_games",
+    "table_name": "cards",
+    "max_example_length": 183,
+    "column_name": "text",
+    "example_preview": "First strike (This creature deals combat damage before creatures without first strike.)\nWhen Ancestor's Chosen enters th"
+  },
+  {
+    "db_id": "card_games",
+    "table_name": "rulings",
+    "max_example_length": 162,
+    "column_name": "text",
+    "example_preview": "Beacon of Immortality’s effect counts as life gain (or life loss, if the life total was negative) for effects that trigg"
+  },
+  {
+    "db_id": "codebase_community",
+    "table_name": "comments",
+    "max_example_length": 98,
+    "column_name": "Text",
+    "example_preview": "Could be a poster child fo argumentative and subjective.  At the least, need to define 'valuable'."
+  },
+  {
+    "db_id": "codebase_community",
+    "table_name": "postHistory",
+    "max_example_length": 83,
+    "column_name": "Text",
+    "example_preview": "How should I elicit prior distributions from experts when fitting a Bayesian model?"
+  },
+  {
+    "db_id": "student_club",
+    "table_name": "income",
+    "max_example_length": 63,
+    "column_name": "notes",
+    "example_preview": "Ad revenue for use on flyers used to advertise upcoming events."
+  },
+  {
+    "db_id": "student_club",
+    "table_name": "event",
+    "max_example_length": 61,
+    "column_name": "notes",
+    "example_preview": "All active members can vote for new officers between 4pm-8pm."
+  },
+  {
+    "db_id": "formula_1",
+    "table_name": "constructors",
+    "max_example_length": 60,
+    "column_name": "url",
+    "example_preview": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering"
+  },
+  {
+    "db_id": "california_schools",
+    "table_name": "frpm",
+    "max_example_length": 59,
+    "column_name": "District Name",
+    "example_preview": "California School for the Deaf-Fremont (State Special Schl)"
+  },
+  {
+    "db_id": "california_schools",
+    "table_name": "schools",
+    "max_example_length": 59,
+    "column_name": "District",
+    "example_preview": "California School for the Deaf-Fremont (State Special Schl)"
+  },
+  {
+    "db_id": "formula_1",
+    "table_name": "circuits",
+    "max_example_length": 52,
+    "column_name": "url",
+    "example_preview": "http://en.wikipedia.org/wiki/Adelaide_Street_Circuit"
+  },
+  {
+    "db_id": "formula_1",
+    "table_name": "seasons",
+    "max_example_length": 52,
+    "column_name": "url",
+    "example_preview": "http://en.wikipedia.org/wiki/1950_Formula_One_season"
+  },
+  {
+    "db_id": "formula_1",
+    "table_name": "races",
+    "max_example_length": 52,
+    "column_name": "url",
+    "example_preview": "http://en.wikipedia.org/wiki/1950_Belgian_Grand_Prix"
+  },
+  {
+    "db_id": "student_club",
+    "table_name": "major",
+    "max_example_length": 52,
+    "column_name": "department",
+    "example_preview": "School of Applied Sciences, Technology and Education"
+  },
+  {
+    "db_id": "formula_1",
+    "table_name": "drivers",
+    "max_example_length": 46,
+    "column_name": "url",
+    "example_preview": "http://en.wikipedia.org/wiki/%C3%89ric_Bernard"
+  },
+  {
+    "db_id": "california_schools",
+    "table_name": "satscores",
+    "max_example_length": 45,
+    "column_name": "sname",
+    "example_preview": "Aspire California College Preparatory Academy"
+  },
+  {
+    "db_id": "card_games",
+    "table_name": "legalities",
+    "max_example_length": 36,
+    "column_name": "uuid",
+    "example_preview": "5f8287b1-5bb6-5f4c-ad17-316a40d5bb0c"
+  },
+  {
+    "db_id": "card_games",
+    "table_name": "set_translations",
+    "max_example_length": 23,
+    "column_name": "translation",
+    "example_preview": "Hauptset Zehnte Edition"
+  },
+  {
+    "db_id": "european_football_2",
+    "table_name": "League",
+    "max_example_length": 22,
+    "column_name": "name",
+    "example_preview": "Belgium Jupiler League"
+  },
+  {
+    "db_id": "student_club",
+    "table_name": "member",
+    "max_example_length": 22,
+    "column_name": "email",
+    "example_preview": "angela.sanders@lpu.edu"
+  },
+  {
+    "db_id": "superhero",
+    "table_name": "superhero",
+    "max_example_length": 22,
+    "column_name": "full_name",
+    "example_preview": "Richard Milhouse Jones"
+  },
+  {
+    "db_id": "codebase_community",
+    "table_name": "badges",
+    "max_example_length": 21,
+    "column_name": "Date",
+    "example_preview": "2010-07-19 19:39:07.0"
+  },
+  {
+    "db_id": "codebase_community",
+    "table_name": "postLinks",
+    "max_example_length": 21,
+    "column_name": "CreationDate",
+    "example_preview": "2010-07-21 14:47:33.0"
+  },
+  {
+    "db_id": "european_football_2",
+    "table_name": "Player_Attributes",
+    "max_example_length": 19,
+    "column_name": "date",
+    "example_preview": "2016-02-18 00:00:00"
+  },
+  {
+    "db_id": "european_football_2",
+    "table_name": "Player",
+    "max_example_length": 19,
+    "column_name": "birthday",
+    "example_preview": "1992-02-29 00:00:00"
+  },
+  {
+    "db_id": "european_football_2",
+    "table_name": "Team_Attributes",
+    "max_example_length": 19,
+    "column_name": "date",
+    "example_preview": "2010-02-22 00:00:00"
+  },
+  {
+    "db_id": "student_club",
+    "table_name": "expense",
+    "max_example_length": 19,
+    "column_name": "expense_description",
+    "example_preview": "Post Cards, Posters"
+  },
+  {
+    "db_id": "superhero",
+    "table_name": "superpower",
+    "max_example_length": 19,
+    "column_name": "power_name",
+    "example_preview": "Accelerated Healing"
+  },
+  {
+    "db_id": "financial",
+    "table_name": "account",
+    "max_example_length": 18,
+    "column_name": "frequency",
+    "example_preview": "POPLATEK PO OBRATU"
+  },
+  {
+    "db_id": "student_club",
+    "table_name": "zip_code",
+    "max_example_length": 18,
+    "column_name": "county",
+    "example_preview": "Adjuntas Municipio"
+  },
+  {
+    "db_id": "student_club",
+    "table_name": "budget",
+    "max_example_length": 18,
+    "column_name": "remaining",
+    "example_preview": "-0.199999999999999"
+  },
+  {
+    "db_id": "student_club",
+    "table_name": "attendance",
+    "max_example_length": 17,
+    "column_name": "link_to_event",
+    "example_preview": "rec2N69DMcrqN9PJC"
+  },
+  {
+    "db_id": "superhero",
+    "table_name": "publisher",
+    "max_example_length": 17,
+    "column_name": "publisher_name",
+    "example_preview": "Dark Horse Comics"
+  },
+  {
+    "db_id": "european_football_2",
+    "table_name": "Team",
+    "max_example_length": 16,
+    "column_name": "team_long_name",
+    "example_preview": "SV Zulte-Waregem"
+  },
+  {
+    "db_id": "debit_card_specializing",
+    "table_name": "gasstations",
+    "max_example_length": 15,
+    "column_name": "Segment",
+    "example_preview": "Value for money"
+  },
+  {
+    "db_id": "financial",
+    "table_name": "district",
+    "max_example_length": 15,
+    "column_name": "A3",
+    "example_preview": "central Bohemia"
+  },
+  {
+    "db_id": "financial",
+    "table_name": "trans",
+    "max_example_length": 14,
+    "column_name": "operation",
+    "example_preview": "PREVOD NA UCET"
+  },
+  {
+    "db_id": "debit_card_specializing",
+    "table_name": "products",
+    "max_example_length": 12,
+    "column_name": "Description",
+    "example_preview": "Rucní zadání"
+  },
+  {
+    "db_id": "formula_1",
+    "table_name": "status",
+    "max_example_length": 12,
+    "column_name": "status",
+    "example_preview": "Disqualified"
+  },
+  {
+    "db_id": "superhero",
+    "table_name": "attribute",
+    "max_example_length": 12,
+    "column_name": "attribute_name",
+    "example_preview": "Intelligence"
+  },
+  {
+    "db_id": "codebase_community",
+    "table_name": "tags",
+    "max_example_length": 11,
+    "column_name": "TagName",
+    "example_preview": "elicitation"
+  },
+  {
+    "db_id": "formula_1",
+    "table_name": "results",
+    "max_example_length": 11,
+    "column_name": "time",
+    "example_preview": "1:34:50.616"
+  },
+  {
+    "db_id": "codebase_community",
+    "table_name": "votes",
+    "max_example_length": 10,
+    "column_name": "CreationDate",
+    "example_preview": "2010-07-19"
+  },
+  {
+    "db_id": "debit_card_specializing",
+    "table_name": "transactions_1k",
+    "max_example_length": 10,
+    "column_name": "Date",
+    "example_preview": "2012-08-24"
+  },
+  {
+    "db_id": "financial",
+    "table_name": "card",
+    "max_example_length": 10,
+    "column_name": "issued",
+    "example_preview": "1998-10-16"
+  },
+  {
+    "db_id": "financial",
+    "table_name": "client",
+    "max_example_length": 10,
+    "column_name": "birth_date",
+    "example_preview": "1970-12-13"
+  },
+  {
+    "db_id": "financial",
+    "table_name": "loan",
+    "max_example_length": 10,
+    "column_name": "date",
+    "example_preview": "1994-01-05"
+  },
+  {
+    "db_id": "thrombosis_prediction",
+    "table_name": "Examination",
+    "max_example_length": 10,
+    "column_name": "Examination Date",
+    "example_preview": "1997-05-27"
+  },
+  {
+    "db_id": "thrombosis_prediction",
+    "table_name": "Patient",
+    "max_example_length": 10,
+    "column_name": "Birthday",
+    "example_preview": "1934-02-13"
+  },
+  {
+    "db_id": "thrombosis_prediction",
+    "table_name": "Laboratory",
+    "max_example_length": 10,
+    "column_name": "Date",
+    "example_preview": "1991-09-11"
+  },
+  {
+    "db_id": "financial",
+    "table_name": "disp",
+    "max_example_length": 9,
+    "column_name": "type",
+    "example_preview": "DISPONENT"
+  },
+  {
+    "db_id": "superhero",
+    "table_name": "colour",
+    "max_example_length": 9,
+    "column_name": "colour",
+    "example_preview": "No Colour"
+  },
+  {
+    "db_id": "toxicology",
+    "table_name": "bond",
+    "max_example_length": 9,
+    "column_name": "bond_id",
+    "example_preview": "TR000_1_2"
+  },
+  {
+    "db_id": "toxicology",
+    "table_name": "connected",
+    "max_example_length": 9,
+    "column_name": "bond_id",
+    "example_preview": "TR000_1_2"
+  },
+  {
+    "db_id": "financial",
+    "table_name": "order",
+    "max_example_length": 8,
+    "column_name": "account_to",
+    "example_preview": "87144583"
+  },
+  {
+    "db_id": "formula_1",
+    "table_name": "lapTimes",
+    "max_example_length": 8,
+    "column_name": "time",
+    "example_preview": "1:49.088"
+  },
+  {
+    "db_id": "formula_1",
+    "table_name": "pitStops",
+    "max_example_length": 8,
+    "column_name": "time",
+    "example_preview": "17:28:24"
+  },
+  {
+    "db_id": "formula_1",
+    "table_name": "qualifying",
+    "max_example_length": 8,
+    "column_name": "q1",
+    "example_preview": "1:26.572"
+  },
+  {
+    "db_id": "debit_card_specializing",
+    "table_name": "yearmonth",
+    "max_example_length": 7,
+    "column_name": "Consumption",
+    "example_preview": "1598.28"
+  },
+  {
+    "db_id": "european_football_2",
+    "table_name": "Country",
+    "max_example_length": 7,
+    "column_name": "name",
+    "example_preview": "Belgium"
+  },
+  {
+    "db_id": "superhero",
+    "table_name": "alignment",
+    "max_example_length": 7,
+    "column_name": "alignment",
+    "example_preview": "Neutral"
+  },
+  {
+    "db_id": "toxicology",
+    "table_name": "atom",
+    "max_example_length": 7,
+    "column_name": "atom_id",
+    "example_preview": "TR000_1"
+  },
+  {
+    "db_id": "superhero",
+    "table_name": "gender",
+    "max_example_length": 6,
+    "column_name": "gender",
+    "example_preview": "Female"
+  },
+  {
+    "db_id": "superhero",
+    "table_name": "race",
+    "max_example_length": 5,
+    "column_name": "race",
+    "example_preview": "Alien"
+  },
+  {
+    "db_id": "toxicology",
+    "table_name": "molecule",
+    "max_example_length": 5,
+    "column_name": "molecule_id",
+    "example_preview": "TR000"
+  },
+  {
+    "db_id": "formula_1",
+    "table_name": "constructorResults",
+    "max_example_length": 4,
+    "column_name": "points",
+    "example_preview": "14.0"
+  },
+  {
+    "db_id": "formula_1",
+    "table_name": "constructorStandings",
+    "max_example_length": 4,
+    "column_name": "points",
+    "example_preview": "14.0"
+  },
+  {
+    "db_id": "formula_1",
+    "table_name": "driverStandings",
+    "max_example_length": 4,
+    "column_name": "points",
+    "example_preview": "10.0"
+  },
+  {
+    "db_id": "debit_card_specializing",
+    "table_name": "customers",
+    "max_example_length": 3,
+    "column_name": "Segment",
+    "example_preview": "SME"
+  },
+  {
+    "db_id": "superhero",
+    "table_name": "hero_attribute",
+    "max_example_length": 2,
+    "column_name": "attribute_value",
+    "example_preview": "80"
+  },
+  {
+    "db_id": "superhero",
+    "table_name": "hero_power",
+    "max_example_length": 2,
+    "column_name": "power_id",
+    "example_preview": "18"
+  }
+]

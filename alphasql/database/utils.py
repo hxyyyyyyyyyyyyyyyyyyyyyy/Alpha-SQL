@@ -6,7 +6,7 @@ from loguru import logger
 
 from alphasql.database.sql_execution import execute_sql_without_timeout
 
-max_example_length = 1000
+max_example_length = 5000
 
 def lower_str_list(str_list: List[Any]) -> List[Any]:
     """

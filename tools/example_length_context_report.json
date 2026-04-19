@@ -1,0 +1,862 @@
+{
+  "meta": {
+    "dev_json": "data/bird/dev/dev.json",
+    "db_root": "data/bird/dev/dev_databases",
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "schema_loader": "fallback_local_repo_compatible_loader",
+    "context_limit": 32768,
+    "reserve_completion": 4096,
+    "prompt_budget": 28672,
+    "baseline_threshold": 1000,
+    "evaluated_task_count": 1534,
+    "total_task_count": 1534,
+    "total_db_count": 11
+  },
+  "distribution": {
+    "all_example_char_lens": {
+      "count": 961,
+      "min": 1,
+      "p50": 8.0,
+      "p90": 36.0,
+      "p95": 79.0,
+      "p99": 3304.8,
+      "max": 8633,
+      "mean": 101.19
+    },
+    "field_max_example_char_lens": {
+      "count": 329,
+      "min": 1,
+      "p50": 9.0,
+      "p90": 49.6,
+      "p95": 92.0,
+      "p99": 3655.88,
+      "max": 8633,
+      "mean": 113.85
+    },
+    "total_fields": 798,
+    "text_fields_with_examples": 329,
+    "top_longest_fields": [
+      {
+        "db_id": "european_football_2",
+        "table_name": "Match",
+        "column_name": "cross",
+        "max_example_char_len": 8633,
+        "example_char_lens": [
+          8390,
+          7071,
+          8633
+        ],
+        "examples_preview": [
+          "<cross><value><stats><crosses>1</crosses></stats><event_incident_typefk>7</event_incident_typefk><elapsed>7</elapsed><su",
+          "<cross><value><stats><crosses>1</crosses></stats><event_incident_typefk>7</event_incident_typefk><elapsed>3</elapsed><su",
+          "<cross><value><stats><crosses>1</crosses></stats><event_incident_typefk>7</event_incident_typefk><elapsed>7</elapsed><su"
+        ]
+      },
+      {
+        "db_id": "european_football_2",
+        "table_name": "Match",
+        "column_name": "foulcommit",
+        "max_example_char_len": 7711,
+        "example_char_lens": [
+          7711,
+          5805,
+          7033
+        ],
+        "examples_preview": [
+          "<foulcommit><value><stats><foulscommitted>1</foulscommitted></stats><event_incident_typefk>37</event_incident_typefk><el",
+          "<foulcommit><value><stats><foulscommitted>1</foulscommitted></stats><event_incident_typefk>37</event_incident_typefk><el",
+          "<foulcommit><value><stats><foulscommitted>1</foulscommitted></stats><event_incident_typefk>37</event_incident_typefk><el"
+        ]
+      },
+      {
+        "db_id": "european_football_2",
+        "table_name": "Match",
+        "column_name": "shotoff",
+        "max_example_char_len": 4984,
+        "example_char_lens": [
+          4984,
+          4150,
+          2070
+        ],
+        "examples_preview": [
+          "<shotoff><value><stats><shotoff>1</shotoff></stats><event_incident_typefk>9</event_incident_typefk><elapsed>4</elapsed><",
+          "<shotoff><value><stats><shotoff>1</shotoff></stats><event_incident_typefk>81</event_incident_typefk><elapsed>6</elapsed>",
+          "<shotoff><value><stats><shotoff>1</shotoff></stats><event_incident_typefk>9</event_incident_typefk><elapsed>10</elapsed>"
+        ]
+      },
+      {
+        "db_id": "european_football_2",
+        "table_name": "Match",
+        "column_name": "shoton",
+        "max_example_char_len": 3881,
+        "example_char_lens": [
+          3100,
+          3612,
+          3881
+        ],
+        "examples_preview": [
+          "<shoton><value><stats><blocked>1</blocked></stats><event_incident_typefk>61</event_incident_typefk><elapsed>3</elapsed><",
+          "<shoton><value><stats><blocked>1</blocked></stats><event_incident_typefk>61</event_incident_typefk><elapsed>7</elapsed><",
+          "<shoton><value><stats><blocked>1</blocked></stats><event_incident_typefk>61</event_incident_typefk><elapsed>5</elapsed><"
+        ]
+      },
+      {
+        "db_id": "european_football_2",
+        "table_name": "Match",
+        "column_name": "corner",
+        "max_example_char_len": 3077,
+        "example_char_lens": [
+          3077,
+          3062,
+          2303
+        ],
+        "examples_preview": [
+          "<corner><value><stats><corners>1</corners></stats><event_incident_typefk>329</event_incident_typefk><elapsed>19</elapsed",
+          "<corner><value><stats><corners>1</corners></stats><event_incident_typefk>330</event_incident_typefk><elapsed>3</elapsed>",
+          "<corner><value><stats><corners>1</corners></stats><event_incident_typefk>329</event_incident_typefk><elapsed>26</elapsed"
+        ]
+      },
+      {
+        "db_id": "european_football_2",
+        "table_name": "Match",
+        "column_name": "possession",
+        "max_example_char_len": 1072,
+        "example_char_lens": [
+          1072,
+          1072,
+          1072
+        ],
+        "examples_preview": [
+          "<possession><value><comment>56</comment><event_incident_typefk>352</event_incident_typefk><elapsed>25</elapsed><subtype>",
+          "<possession><value><comment>65</comment><event_incident_typefk>352</event_incident_typefk><elapsed>27</elapsed><subtype>",
+          "<possession><value><comment>45</comment><event_incident_typefk>352</event_incident_typefk><elapsed>25</elapsed><subtype>"
+        ]
+      },
+      {
+        "db_id": "european_football_2",
+        "table_name": "Match",
+        "column_name": "card",
+        "max_example_char_len": 887,
+        "example_char_lens": [
+          887,
+          8,
+          612
+        ],
+        "examples_preview": [
+          "<card><value><comment>y</comment><stats><ycards>1</ycards></stats><event_incident_typefk>73</event_incident_typefk><elap",
+          "<card />",
+          "<card><value><comment>y</comment><stats><ycards>1</ycards></stats><event_incident_typefk>73</event_incident_typefk><elap"
+        ]
+      },
+      {
+        "db_id": "european_football_2",
+        "table_name": "Match",
+        "column_name": "goal",
+        "max_example_char_len": 683,
+        "example_char_lens": [
+          683,
+          345,
+          350
+        ],
+        "examples_preview": [
+          "<goal><value><comment>n</comment><stats><goals>1</goals><shoton>1</shoton></stats><event_incident_typefk>406</event_inci",
+          "<goal><value><comment>n</comment><stats><goals>1</goals><shoton>1</shoton></stats><event_incident_typefk>393</event_inci",
+          "<goal><value><comment>n</comment><stats><goals>1</goals><shoton>1</shoton></stats><event_incident_typefk>407</event_inci"
+        ]
+      },
+      {
+        "db_id": "codebase_community",
+        "table_name": "users",
+        "column_name": "AboutMe",
+        "max_example_char_len": 527,
+        "example_char_lens": [
+          527,
+          283,
+          443
+        ],
+        "examples_preview": [
+          "<p>Hi, I'm not really a person.</p>\n\n<p>I'm a background process that helps keep this site clean!</p>\n\n<p>I do things li",
+          "<p>Developer on the StackOverflow team.  Find me on</p>\n\n<p><a href=\"http://www.twitter.com/SuperDalgas\" rel=\"nofollow\">",
+          "<p><a href=\"http://blog.stackoverflow.com/2009/01/welcome-stack-overflow-valued-associate-00002/\">Developer on the Stack"
+        ]
+      },
+      {
+        "db_id": "card_games",
+        "table_name": "sets",
+        "column_name": "booster",
+        "max_example_char_len": 255,
+        "example_char_lens": [
+          255,
+          255,
+          255
+        ],
+        "examples_preview": [
+          "{'default': {'boosters': [{'contents': {'basic': 1, 'common': 10, 'rare': 1, 'uncommon': 3}, 'weight': 1913922}, {'conte",
+          "{'default': {'boosters': [{'contents': {'common': 11, 'rare': 1, 'uncommon': 3}, 'weight': 1}], 'boostersTotalWeight': 1",
+          "{'default': {'boosters': [{'contents': {'common': 8, 'dedicatedFoil2xm': 2, 'rareMythic': 2, 'uncommon': 3}, 'weight': 1"
+        ]
+      },
+      {
+        "db_id": "card_games",
+        "table_name": "foreign_data",
+        "column_name": "text",
+        "max_example_char_len": 206,
+        "example_char_lens": [
+          194,
+          206,
+          205
+        ],
+        "examples_preview": [
+          "Erstschlag (Diese Kreatur fügt Kampfschaden vor Kreaturen ohne Erstschlag zu.)\nWenn der Ausgewählte der Ahnfrau ins Spie",
+          "Daña primero. (Esta criatura hace daño de combate antes que las criaturas sin la habilidad de dañar primero.)\nCuando el ",
+          "Initiative (Cette créature inflige des blessures de combat avant les créatures sans l'initiative.)\nQuand l'Élu de l'Ancê"
+        ]
+      },
+      {
+        "db_id": "codebase_community",
+        "table_name": "posts",
+        "column_name": "Body",
+        "max_example_char_len": 206,
+        "example_char_lens": [
+          91,
+          146,
+          206
+        ],
+        "examples_preview": [
+          "<p>How should I elicit prior distributions from experts when fitting a Bayesian model?</p>\n",
+          "<p>In many different statistical methods there is an \"assumption of normality\".  What is \"normality\" and how do I know i",
+          "<p>What are some valuable Statistical Analysis open source projects available right now?</p>\n\n<p>Edit: as pointed out by"
+        ]
+      },
+      {
+        "db_id": "card_games",
+        "table_name": "cards",
+        "column_name": "text",
+        "max_example_char_len": 183,
+        "example_char_lens": [
+          183,
+          67,
+          155
+        ],
+        "examples_preview": [
+          "First strike (This creature deals combat damage before creatures without first strike.)\nWhen Ancestor's Chosen enters th",
+          "Flying\nWhen Angel of Mercy enters the battlefield, you gain 3 life.",
+          "Flying (This creature can't be blocked except by creatures with flying or reach.)\nWhen Aven Cloudchaser enters the battl"
+        ]
+      },
+      {
+        "db_id": "card_games",
+        "table_name": "cards",
+        "column_name": "purchaseUrls",
+        "max_example_char_len": 180,
+        "example_char_lens": [
+          180,
+          180,
+          180
+        ],
+        "examples_preview": [
+          "{'cardKingdom': 'https://mtgjson.com/links/9fb51af0ad6f0736', 'cardmarket': 'https://mtgjson.com/links/ace8861194ee0b6a'",
+          "{'cardKingdom': 'https://mtgjson.com/links/027095d094e58f5b', 'cardmarket': 'https://mtgjson.com/links/f6fb5098e1cd1b1e'",
+          "{'cardKingdom': 'https://mtgjson.com/links/9246105d88032a9f', 'cardmarket': 'https://mtgjson.com/links/dcdfe48e6a8f9e1e'"
+        ]
+      },
+      {
+        "db_id": "card_games",
+        "table_name": "cards",
+        "column_name": "originalText",
+        "max_example_char_len": 176,
+        "example_char_lens": [
+          176,
+          135,
+          148
+        ],
+        "examples_preview": [
+          "First strike (This creature deals combat damage before creatures without first strike.)\nWhen Ancestor's Chosen comes int",
+          "Flying (This creature can't be blocked except by creatures with flying or reach.)\nWhen Angel of Mercy comes into play, y",
+          "Flying (This creature can't be blocked except by creatures with flying or reach.)\nWhen Aven Cloudchaser comes into play,"
+        ]
+      },
+      {
+        "db_id": "card_games",
+        "table_name": "rulings",
+        "column_name": "text",
+        "max_example_char_len": 162,
+        "example_char_lens": [
+          83,
+          91,
+          162
+        ],
+        "examples_preview": [
+          "You draw the card when Bandage resolves, not when the damage is actually prevented.",
+          "If you double a negative life total, you do the real math. A life total of -10 becomes -20.",
+          "Beacon of Immortality’s effect counts as life gain (or life loss, if the life total was negative) for effects that trigg"
+        ]
+      },
+      {
+        "db_id": "codebase_community",
+        "table_name": "comments",
+        "column_name": "Text",
+        "max_example_char_len": 98,
+        "example_char_lens": [
+          98,
+          41,
+          71
+        ],
+        "examples_preview": [
+          "Could be a poster child fo argumentative and subjective.  At the least, need to define 'valuable'.",
+          "Yes, R is nice- but WHY is it 'valuable'.",
+          "Again- why?  How would I convince my boss to use this over, say, Excel."
+        ]
+      },
+      {
+        "db_id": "codebase_community",
+        "table_name": "postHistory",
+        "column_name": "Text",
+        "max_example_char_len": 83,
+        "example_char_lens": [
+          83,
+          29,
+          30
+        ],
+        "examples_preview": [
+          "How should I elicit prior distributions from experts when fitting a Bayesian model?",
+          "Eliciting priors from experts",
+          "<bayesian><prior><elicitation>"
+        ]
+      },
+      {
+        "db_id": "card_games",
+        "table_name": "cards",
+        "column_name": "flavorText",
+        "max_example_char_len": 79,
+        "example_char_lens": [
+          41,
+          52,
+          79
+        ],
+        "examples_preview": [
+          "Every tear shed is a drop of immortality.",
+          "The perfect antidote for a tightly packed formation.",
+          "Life is measured in inches. To a healer, every one of those inches is precious."
+        ]
+      },
+      {
+        "db_id": "codebase_community",
+        "table_name": "postHistory",
+        "column_name": "Comment",
+        "max_example_char_len": 68,
+        "example_char_lens": [
+          11,
+          30,
+          68
+        ],
+        "examples_preview": [
+          "edited tags",
+          "add content from the comments;",
+          "Removed the word \"most\" and used \"some\"- most is way too subjective."
+        ]
+      },
+      {
+        "db_id": "codebase_community",
+        "table_name": "posts",
+        "column_name": "Title",
+        "max_example_char_len": 65,
+        "example_char_lens": [
+          29,
+          18,
+          65
+        ],
+        "examples_preview": [
+          "Eliciting priors from experts",
+          "What is normality?",
+          "What are some valuable Statistical Analysis open source projects?"
+        ]
+      },
+      {
+        "db_id": "student_club",
+        "table_name": "income",
+        "column_name": "notes",
+        "max_example_char_len": 63,
+        "example_char_lens": [
+          48,
+          39,
+          63
+        ],
+        "examples_preview": [
+          "Secured donations to help pay for speaker gifts.",
+          "Annual funding from Student Government.",
+          "Ad revenue for use on flyers used to advertise upcoming events."
+        ]
+      },
+      {
+        "db_id": "student_club",
+        "table_name": "event",
+        "column_name": "notes",
+        "max_example_char_len": 61,
+        "example_char_lens": [
+          61,
+          38,
+          43
+        ],
+        "examples_preview": [
+          "All active members can vote for new officers between 4pm-8pm.",
+          "Attend Women's soccer game as a group.",
+          "Semester social event. Optional attendance."
+        ]
+      },
+      {
+        "db_id": "formula_1",
+        "table_name": "constructors",
+        "column_name": "url",
+        "max_example_char_len": 60,
+        "example_char_lens": [
+          36,
+          39,
+          60
+        ],
+        "examples_preview": [
+          "http://en.wikipedia.org/wiki/McLaren",
+          "http://en.wikipedia.org/wiki/BMW_Sauber",
+          "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering"
+        ]
+      },
+      {
+        "db_id": "california_schools",
+        "table_name": "frpm",
+        "column_name": "District Name",
+        "max_example_char_len": 59,
+        "example_char_lens": [
+          34,
+          52,
+          59
+        ],
+        "examples_preview": [
+          "Alameda County Office of Education",
+          "California School for the Blind (State Special Schl)",
+          "California School for the Deaf-Fremont (State Special Schl)"
+        ]
+      },
+      {
+        "db_id": "california_schools",
+        "table_name": "schools",
+        "column_name": "District",
+        "max_example_char_len": 59,
+        "example_char_lens": [
+          34,
+          52,
+          59
+        ],
+        "examples_preview": [
+          "Alameda County Office of Education",
+          "California School for the Blind (State Special Schl)",
+          "California School for the Deaf-Fremont (State Special Schl)"
+        ]
+      },
+      {
+        "db_id": "card_games",
+        "table_name": "foreign_data",
+        "column_name": "flavorText",
+        "max_example_char_len": 59,
+        "example_char_lens": [
+          59,
+          46,
+          41
+        ],
+        "examples_preview": [
+          "„Es ist der Wille aller, und meine Hand, die ihn ausführt.\"",
+          "\"La voluntad de todos, realizada por mi mano.\"",
+          "« La volonté de tous passe par ma main. »"
+        ]
+      },
+      {
+        "db_id": "card_games",
+        "table_name": "cards",
+        "column_name": "leadershipSkills",
+        "max_example_char_len": 57,
+        "example_char_lens": [
+          57,
+          57,
+          56
+        ],
+        "examples_preview": [
+          "{'brawl': False, 'commander': True, 'oathbreaker': False}",
+          "{'brawl': False, 'commander': False, 'oathbreaker': True}",
+          "{'brawl': False, 'commander': True, 'oathbreaker': True}"
+        ]
+      },
+      {
+        "db_id": "card_games",
+        "table_name": "cards",
+        "column_name": "printings",
+        "max_example_char_len": 53,
+        "example_char_lens": [
+          11,
+          53,
+          15
+        ],
+        "examples_preview": [
+          "10E,JUD,UMA",
+          "10E,8ED,9ED,DDC,DVD,IMA,INV,JMP,MB1,P02,PS11,PSAL,S99",
+          "10E,8ED,9ED,ODY"
+        ]
+      },
+      {
+        "db_id": "formula_1",
+        "table_name": "circuits",
+        "column_name": "url",
+        "max_example_char_len": 52,
+        "example_char_lens": [
+          36,
+          33,
+          52
+        ],
+        "examples_preview": [
+          "http://en.wikipedia.org/wiki/A1-Ring",
+          "http://en.wikipedia.org/wiki/AVUS",
+          "http://en.wikipedia.org/wiki/Adelaide_Street_Circuit"
+        ]
+      }
+    ]
+  },
+  "thresholds": {
+    "safe_with_reserve": {
+      "max_example_length": 4984,
+      "max_chat_prompt_tokens": 20816,
+      "rejected_field_count": 2,
+      "token_breakdown_summary": {
+        "prefix_instruction": {
+          "count": 1534,
+          "min": 859,
+          "p50": 859.0,
+          "p90": 859.0,
+          "p95": 859.0,
+          "p99": 859.0,
+          "max": 859,
+          "mean": 859
+        },
+        "schema_context": {
+          "count": 1534,
+          "min": 386,
+          "p50": 2951.0,
+          "p90": 7594.0,
+          "p95": 19744.0,
+          "p99": 19744.0,
+          "max": 19744,
+          "mean": 4178.12
+        },
+        "question_wrapper": {
+          "count": 1534,
+          "min": 10,
+          "p50": 10.0,
+          "p90": 10.0,
+          "p95": 10.0,
+          "p99": 10.0,
+          "max": 10,
+          "mean": 10
+        },
+        "question_text": {
+          "count": 1534,
+          "min": 5,
+          "p50": 18.0,
+          "p90": 30.0,
+          "p95": 35.0,
+          "p99": 44.67,
+          "max": 63,
+          "mean": 19.5
+        },
+        "hint_wrapper": {
+          "count": 1534,
+          "min": 3,
+          "p50": 3.0,
+          "p90": 3.0,
+          "p95": 3.0,
+          "p99": 3.0,
+          "max": 3,
+          "mean": 3
+        },
+        "hint_text": {
+          "count": 1534,
+          "min": 0,
+          "p50": 21.0,
+          "p90": 49.0,
+          "p95": 60.35,
+          "p99": 93.0,
+          "max": 200,
+          "mean": 25.02
+        },
+        "suffix_instruction": {
+          "count": 1534,
+          "min": 21,
+          "p50": 21.0,
+          "p90": 21.0,
+          "p95": 21.0,
+          "p99": 21.0,
+          "max": 21,
+          "mean": 21
+        },
+        "plain_prompt_total": {
+          "count": 1534,
+          "min": 1283,
+          "p50": 3874.0,
+          "p90": 8546.7,
+          "p95": 20673.35,
+          "p99": 20714.0,
+          "max": 20787,
+          "mean": 5112.93
+        },
+        "chat_prompt_total": {
+          "count": 1534,
+          "min": 1312,
+          "p50": 3903.0,
+          "p90": 8575.7,
+          "p95": 20702.35,
+          "p99": 20743.0,
+          "max": 20816,
+          "mean": 5141.93
+        }
+      },
+      "worst_case_task": {
+        "question_id": 1041,
+        "db_id": "european_football_2",
+        "chat_prompt_tokens": 20816,
+        "plain_prompt_tokens": 20787,
+        "part_tokens": {
+          "prefix_instruction": 859,
+          "schema_context": 19744,
+          "question_wrapper": 10,
+          "question_text": 40,
+          "hint_wrapper": 3,
+          "hint_text": 113,
+          "suffix_instruction": 21
+        },
+        "question": "For the teams with normal build-up play dribbling class in 2014, List the names of the teams with less than average chance creation passing, in descending order of chance creation passing."
+      }
+    },
+    "safe_without_reserve": {
+      "max_example_length": 7711,
+      "max_chat_prompt_tokens": 28965,
+      "rejected_field_count": 1,
+      "token_breakdown_summary": {
+        "prefix_instruction": {
+          "count": 1534,
+          "min": 859,
+          "p50": 859.0,
+          "p90": 859.0,
+          "p95": 859.0,
+          "p99": 859.0,
+          "max": 859,
+          "mean": 859
+        },
+        "schema_context": {
+          "count": 1534,
+          "min": 386,
+          "p50": 2951.0,
+          "p90": 7594.0,
+          "p95": 27893.0,
+          "p99": 27893.0,
+          "max": 27893,
+          "mean": 4863.4
+        },
+        "question_wrapper": {
+          "count": 1534,
+          "min": 10,
+          "p50": 10.0,
+          "p90": 10.0,
+          "p95": 10.0,
+          "p99": 10.0,
+          "max": 10,
+          "mean": 10
+        },
+        "question_text": {
+          "count": 1534,
+          "min": 5,
+          "p50": 18.0,
+          "p90": 30.0,
+          "p95": 35.0,
+          "p99": 44.67,
+          "max": 63,
+          "mean": 19.5
+        },
+        "hint_wrapper": {
+          "count": 1534,
+          "min": 3,
+          "p50": 3.0,
+          "p90": 3.0,
+          "p95": 3.0,
+          "p99": 3.0,
+          "max": 3,
+          "mean": 3
+        },
+        "hint_text": {
+          "count": 1534,
+          "min": 0,
+          "p50": 21.0,
+          "p90": 49.0,
+          "p95": 60.35,
+          "p99": 93.0,
+          "max": 200,
+          "mean": 25.02
+        },
+        "suffix_instruction": {
+          "count": 1534,
+          "min": 21,
+          "p50": 21.0,
+          "p90": 21.0,
+          "p95": 21.0,
+          "p99": 21.0,
+          "max": 21,
+          "mean": 21
+        },
+        "plain_prompt_total": {
+          "count": 1534,
+          "min": 1283,
+          "p50": 3874.0,
+          "p90": 8546.7,
+          "p95": 28822.35,
+          "p99": 28863.0,
+          "max": 28936,
+          "mean": 5798.21
+        },
+        "chat_prompt_total": {
+          "count": 1534,
+          "min": 1312,
+          "p50": 3903.0,
+          "p90": 8575.7,
+          "p95": 28851.35,
+          "p99": 28892.0,
+          "max": 28965,
+          "mean": 5827.21
+        }
+      },
+      "worst_case_task": {
+        "question_id": 1041,
+        "db_id": "european_football_2",
+        "chat_prompt_tokens": 28965,
+        "plain_prompt_tokens": 28936,
+        "part_tokens": {
+          "prefix_instruction": 859,
+          "schema_context": 27893,
+          "question_wrapper": 10,
+          "question_text": 40,
+          "hint_wrapper": 3,
+          "hint_text": 113,
+          "suffix_instruction": 21
+        },
+        "question": "For the teams with normal build-up play dribbling class in 2014, List the names of the teams with less than average chance creation passing, in descending order of chance creation passing."
+      }
+    },
+    "baseline": {
+      "max_example_length": 1000,
+      "max_chat_prompt_tokens": 8621,
+      "rejected_field_count": 6,
+      "token_breakdown_summary": {
+        "prefix_instruction": {
+          "count": 1534,
+          "min": 859,
+          "p50": 859.0,
+          "p90": 859.0,
+          "p95": 859.0,
+          "p99": 859.0,
+          "max": 859,
+          "mean": 859
+        },
+        "schema_context": {
+          "count": 1534,
+          "min": 386,
+          "p50": 2951.0,
+          "p90": 7594.0,
+          "p95": 7594.0,
+          "p99": 7594.0,
+          "max": 7594,
+          "mean": 3094.4
+        },
+        "question_wrapper": {
+          "count": 1534,
+          "min": 10,
+          "p50": 10.0,
+          "p90": 10.0,
+          "p95": 10.0,
+          "p99": 10.0,
+          "max": 10,
+          "mean": 10
+        },
+        "question_text": {
+          "count": 1534,
+          "min": 5,
+          "p50": 18.0,
+          "p90": 30.0,
+          "p95": 35.0,
+          "p99": 44.67,
+          "max": 63,
+          "mean": 19.5
+        },
+        "hint_wrapper": {
+          "count": 1534,
+          "min": 3,
+          "p50": 3.0,
+          "p90": 3.0,
+          "p95": 3.0,
+          "p99": 3.0,
+          "max": 3,
+          "mean": 3
+        },
+        "hint_text": {
+          "count": 1534,
+          "min": 0,
+          "p50": 21.0,
+          "p90": 49.0,
+          "p95": 60.35,
+          "p99": 93.0,
+          "max": 200,
+          "mean": 25.02
+        },
+        "suffix_instruction": {
+          "count": 1534,
+          "min": 21,
+          "p50": 21.0,
+          "p90": 21.0,
+          "p95": 21.0,
+          "p99": 21.0,
+          "max": 21,
+          "mean": 21
+        },
+        "plain_prompt_total": {
+          "count": 1534,
+          "min": 1283,
+          "p50": 3874.0,
+          "p90": 8513.0,
+          "p95": 8531.0,
+          "p99": 8550.34,
+          "max": 8592,
+          "mean": 4029.21
+        },
+        "chat_prompt_total": {
+          "count": 1534,
+          "min": 1312,
+          "p50": 3903.0,
+          "p90": 8542.0,
+          "p95": 8560.0,
+          "p99": 8579.34,
+          "max": 8621,
+          "mean": 4058.21
+        }
+      },
+      "worst_case_task": {
+        "question_id": 521,
+        "db_id": "card_games",
+        "chat_prompt_tokens": 8621,
+        "plain_prompt_tokens": 8592,
+        "part_tokens": {
+          "prefix_instruction": 859,
+          "schema_context": 7594,
+          "question_wrapper": 10,
+          "question_text": 42,
+          "hint_wrapper": 3,
+          "hint_text": 65,
+          "suffix_instruction": 21
+        },
+        "question": "Among the cards whose version of frame style is 1997, what is the status of the card illustrated by D. Alexander Gregory in legacy play format that has sensitive content or Wizards of the Coast?"
+      }
+    }
+  }
+}
