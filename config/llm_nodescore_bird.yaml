@@ -15,6 +15,10 @@ save_root_dir: "results/llm_nodescore_eps0.5/gemma-4-E4B-it/spider/dev"
 # save_root_dir: "results/llm_nodescore_eps0.2/gemma-4-E4B-it/bird/dev"
 # save_root_dir: "results/llm_nodescore_eps0.2/Qwen2.5-Coder-7B-Instruct/bird/dev"
 # save_root_dir: "results/llm_nodescore_eps0.2/Qwen3-8B/bird/dev"
+=======
+# save_root_dir: "results/llm_nodescore_eps0.2/Qwen2.5-Coder-7B-Instruct/bird/dev"
+save_root_dir: "results/llm_nodescore_eps0.2/Qwen3-8B/bird/dev"
+>>>>>>> 7e33cc32b3460182508b75298bb1e5b654058ecc
 # save_root_dir: "results/llm_nodescore_eps0.2/Qwen2.5-Coder-32B-Instruct/bird/dev"
 mcts_model_kwargs:
     model: "google/gemma-4-E4B-it"

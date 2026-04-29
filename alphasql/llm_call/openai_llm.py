@@ -34,6 +34,12 @@ def call_openai(prompt: str,
     if api_key is not None:
         client.api_key = api_key
     retrying = 0
+    
+    print("-" * 100, flush=True)
+    print("prompt to call OpenAI:", flush=True)
+    print("-" * 100, flush=True)
+    print(prompt, flush=True)
+    
     while retrying < MAX_RETRYING_TIMES:
         try:
             if n == 1 or (n > 1 and n_strategy == N_CALLING_STRATEGY_SINGLE):
@@ -81,6 +87,10 @@ def call_openai(prompt: str,
                 raise e
             # sleep for 10 seconds
             time.sleep(10)
-    # print(contents)
+    print("-" * 100, flush=True)
+    print("response from OpenAI:", flush=True)
+    print("-" * 100, flush=True)
+    print(contents, flush=True)
+    print("\n\n\n", flush=True)
     return contents
 

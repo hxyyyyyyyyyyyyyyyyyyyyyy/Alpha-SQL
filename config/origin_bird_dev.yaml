@@ -14,11 +14,13 @@ save_root_dir: "results/origin/gemma-4-E4B-it/spider/dev"
 # save_root_dir: "results/origin/gemma-4-E4B-it/bird/dev"
 # save_root_dir: "results/origin/Qwen2.5-Coder-7B-Instruct/bird/dev"
 # save_root_dir: "results/origin/Qwen3-8B/bird/dev"
+save_root_dir: "results/origin/gemma-4-31B-it/bird/dev"
 # save_root_dir: "results/origin/Qwen2.5-Coder-32B-Instruct/bird/dev"
 mcts_model_kwargs:
     model: "google/gemma-4-E4B-it"
     # model: "Qwen/Qwen2.5-Coder-7B-Instruct"
     # model: "Qwen/Qwen3-8B"
+    model: "google/gemma-4-31B-it"
     # model: "Qwen/Qwen2.5-Coder-32B-Instruct"
     n: 3
     top_p: 0.8
