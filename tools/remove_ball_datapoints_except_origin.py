@@ -70,7 +70,7 @@ def main() -> None:
         description="Delete datapoint files whose numeric stem matches question_ids in ball.json, excluding a specific folder name."
     )
     parser.add_argument("--results-root", type=str, default="results")
-    parser.add_argument("--ball-json", type=str, default="results/ball.json")
+    parser.add_argument("--ball-json", type=str, default="data/bird/dev/ball.json")
     parser.add_argument("--exclude-dir-name", type=str, default="origin")
     parser.add_argument("--suffixes", type=str, default=".pkl", help="Comma-separated suffix list, e.g. .pkl,.json")
     parser.add_argument("--apply", action="store_true", help="Actually delete files. Without this flag, only dry-run.")
