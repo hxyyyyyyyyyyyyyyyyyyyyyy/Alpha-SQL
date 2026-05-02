@@ -28,10 +28,10 @@ class Record:
 
 
 def _record_total_tokens(record: Record) -> Optional[int]:
-    if record.total_tokens is not None:
-        return record.total_tokens
     if record.prompt_tokens is not None and record.completion_tokens is not None:
         return record.prompt_tokens + record.completion_tokens
+    if record.total_tokens is not None:
+        return record.total_tokens
     return None
 
 
@@ -52,9 +52,15 @@ def _assign_worker_and_delta(records: List[Record]) -> List[Dict]:
         if rec_total is not None:
             for idx, worker in enumerate(workers):
                 worker_total = worker.get("last_total")
+                worker_prompt = worker.get("last_prompt")
+                worker_completion = worker.get("last_completion")
                 if worker_total is None:
                     continue
-                if rec_total >= worker_total:
+                if (
+                    rec_total >= worker_total and
+                    (worker_prompt is None or rec.prompt_tokens is None or rec.prompt_tokens >= worker_prompt) and
+                    (worker_completion is None or rec.completion_tokens is None or rec.completion_tokens >= worker_completion)
+                ):
                     delta = rec_total - worker_total
                     if best_score is None or delta < best_score:
                         best_score = delta
@@ -88,19 +94,19 @@ def _assign_worker_and_delta(records: List[Record]) -> List[Dict]:
             delta_prompt = (
                 rec.prompt_tokens - int(last_prompt)
                 if rec.prompt_tokens is not None and last_prompt is not None and rec.prompt_tokens >= int(last_prompt)
-                else rec.prompt_tokens
+                else (rec.prompt_tokens if last_prompt is None else 0)
             )
             delta_completion = (
                 rec.completion_tokens - int(last_completion)
                 if rec.completion_tokens is not None
                 and last_completion is not None
                 and rec.completion_tokens >= int(last_completion)
-                else rec.completion_tokens
+                else (rec.completion_tokens if last_completion is None else 0)
             )
             delta_total = (
                 rec_total - int(last_total)
                 if rec_total is not None and last_total is not None and rec_total >= int(last_total)
-                else rec_total
+                else (rec_total if last_total is None else 0)
             )
             delta_cost = (
                 rec.total_cost - float(last_cost)
@@ -180,19 +186,19 @@ def _parse_log_file(file_path: Path) -> Tuple[List[Record], Dict[str, int]]:
                 break
 
             p = PROMPT_RE.search(next_line)
-            if p:
+            if p and prompt_tokens is None:
                 prompt_tokens = int(p.group(1))
 
             c = COMPLETION_RE.search(next_line)
-            if c:
+            if c and completion_tokens is None:
                 completion_tokens = int(c.group(1))
 
             t = TOTAL_RE.search(next_line)
-            if t:
+            if t and total_tokens is None:
                 total_tokens = int(t.group(1))
 
             co = COST_RE.search(next_line)
-            if co:
+            if co and total_cost is None:
                 total_cost = float(co.group(1))
 
             # Most blocks end quickly; cap lookahead to avoid scanning too far
